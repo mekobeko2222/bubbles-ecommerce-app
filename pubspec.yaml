@@ -1,0 +1,41 @@
+name: bubbles_ecommerce_app
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  provider: ^6.1.2
+  shared_preferences: ^2.0.15
+  firebase_core: ^2.32.0
+  firebase_auth: ^4.20.0
+  cloud_firestore: ^4.17.5
+  firebase_storage: ^11.7.7
+  # FCM Dependencies - ADDED FOR PUSH NOTIFICATIONS
+  firebase_messaging: ^14.7.9
+  flutter_local_notifications: ^16.3.0
+  # firebase_ui_auth: ^1.13.0 # REMOVED: No longer needed as we use custom AuthScreen
+  cupertino_icons: ^1.0.8
+  url_launcher: ^6.2.2
+  image_picker: ^1.1.2
+  http: ^1.2.1
+  google_sign_in: ^6.2.1
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/ # Path to your assets, used by AuthScreen for background.gif

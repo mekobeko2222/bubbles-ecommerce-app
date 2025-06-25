@@ -1,0 +1,17 @@
+{
+  "name": "bubbles-notification-api",
+  "version": "1.0.0",
+  "description": "Notification API for Bubbles E-commerce",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

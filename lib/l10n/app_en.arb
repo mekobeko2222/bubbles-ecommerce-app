@@ -1,0 +1,845 @@
+{
+  "appTitle": "Bubbles E-commerce App",
+  "homeScreenTitle": "Bubbles E-commerce",
+  "myBasketTitle": "My Basket",
+  "checkoutTitle": "Checkout",
+  "orderConfirmedTitle": "Order Confirmed!",
+  "myOrdersTitle": "My Orders",
+  "userProfileTitle": "User Profile",
+  "aboutUsTitle": "About Us",
+  "adminPanelTitle": "Admin Panel",
+  "continueShopping": "Continue Shopping",
+  "totalPrice": "Total Price",
+  "subtotal": "Subtotal",
+  "shippingFee": "Shipping Fee",
+  "grandTotal": "Grand Total",
+  "placeOrder": "Place Order",
+  "addToBasket": "Add to Basket",
+  "outOfStock": "Out of Stock",
+  "relatedProducts": "Related Products",
+  "description": "Description",
+  "availability": "Availability",
+  "inStock": "In Stock ({quantity})",
+  "@inStock": {
+    "placeholders": {
+      "quantity": {
+        "type": "Object"
+      }
+    }
+  },
+  "quantity": "Quantity",
+  "pricePerItem": "EGP {price} per item",
+  "@pricePerItem": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "totalItemPrice": "Total: EGP {totalPrice}",
+  "@totalItemPrice": {
+    "placeholders": {
+      "totalPrice": {
+        "type": "Object"
+      }
+    }
+  },
+  "email": "Email",
+  "displayName": "Display Name",
+  "defaultShippingAddress": "Default Shipping Address",
+  "shippingArea": "Shipping Area",
+  "buildingNumber": "Building Number",
+  "floorNumber": "Floor Number",
+  "apartmentNumber": "Apartment Number",
+  "phoneNumber": "Phone Number",
+  "saveChanges": "Save Changes",
+  "changePassword": "Change Password",
+  "loadingData": "Loading data...",
+  "errorLoadingData": "Error loading data: {error}",
+  "@errorLoadingData": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "noDataFound": "No data found.",
+  "productName": "Product Name",
+  "price": "Price",
+  "discount": "Discount (%)",
+  "quantityInStock": "Quantity in Stock",
+  "productDescription": "Product Description",
+  "tags": "Tags (comma-separated for related products)",
+  "addProductImages": "Add Product Images",
+  "addMoreImages": "Add more images ({current}/{max})",
+  "@addMoreImages": {
+    "placeholders": {
+      "current": {
+        "type": "Object"
+      },
+      "max": {
+        "type": "Object"
+      }
+    }
+  },
+  "selectCategory": "Select Category",
+  "addCategory": "Add New Category",
+  "categoryName": "Category Name",
+  "categoryIcon": "Category Icon (emoji)",
+  "addProduct": "Add Product",
+  "manageProducts": "Manage Products",
+  "manageAreas": "Manage Areas",
+  "orders": "Orders",
+  "analytics": "Analytics",
+  "addNewShippingArea": "Add New Shipping Area",
+  "areaName": "Area Name",
+  "addArea": "Add Area",
+  "shippingFeeAmount": "Shipping Fee",
+  "totalOrders": "Total Orders",
+  "totalSales": "Total Sales",
+  "ordersByStatus": "Orders by Status",
+  "orderId": "Order ID",
+  "userEmail": "User Email",
+  "status": "Status",
+  "orderDate": "Order Date",
+  "updateStatus": "Update Status",
+  "reorder": "Reorder",
+  "cancelOrder": "Cancel Order",
+  "loadingOrders": "Loading your orders...",
+  "errorLoadingOrders": "Error loading orders",
+  "noOrdersYet": "No orders yet",
+  "orderHistoryWillAppearHere": "Your order history will appear here",
+  "cannotReorderEmptyList": "Cannot reorder empty list of items.",
+  "addingItemsToBasket": "Adding items to basket...",
+  "uniqueItemsAddedToBasket": "{count} unique items added to your basket!",
+  "@uniqueItemsAddedToBasket": {
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "view": "View",
+  "searchProducts": "Search products...",
+  "searchResults": "Search Results",
+  "productsOnOffer": "Products on Offer",
+  "noProductsFound": "No products found for \"{query}\".",
+  "@noProductsFound": {
+    "placeholders": {
+      "query": {
+        "type": "Object"
+      }
+    }
+  },
+  "noOffersFound": "No offers found.",
+  "shopByCategory": "Shop by Category",
+  "unavailable": "Unavailable",
+  "contactUs": "Contact Us",
+  "ourMission": "Our Mission",
+  "whatWeOffer": "What We Offer",
+  "secureCheckout": "Secure Checkout",
+  "realtimeOrderTracking": "Real-time Order Tracking",
+  "diverseProductCatalog": "Diverse Product Catalog",
+  "easyNavigation": "Easy Navigation",
+  "allRightsReserved": "© 2024 Bubbles E-commerce. All rights reserved.",
+  "thankYouForYourOrder": "Thank you for your order!",
+  "orderPlacedSuccessfully": "Your order has been placed successfully.",
+  "orderDetails": "Order Details:",
+  "shippingAddress": "Shipping Address:",
+  "imageLoadingError": "Error loading image for {itemName} ({imageUrl}): {error}",
+  "@imageLoadingError": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      },
+      "imageUrl": {
+        "type": "Object"
+      },
+      "itemName": {
+        "type": "Object"
+      }
+    }
+  },
+  "orderItemImageNotSupported": "Order item image not supported",
+  "orderCannotBeCancelled": "Order cannot be cancelled",
+  "orderCurrently": "This order is currently \"{status}\" and cannot be cancelled by you. Please contact customer support if you need further assistance.",
+  "@orderCurrently": {
+    "placeholders": {
+      "status": {
+        "type": "Object"
+      }
+    }
+  },
+  "confirmDeletion": "Confirm Deletion",
+  "areYouSureDeleteProduct": "Are you sure you want to delete \"{productName}\"? This action cannot be undone.",
+  "@areYouSureDeleteProduct": {
+    "placeholders": {
+      "productName": {
+        "type": "Object"
+      }
+    }
+  },
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "cloudinaryUploadFailed": "Cloudinary upload failed: {statusCode}. Check Cloudinary Console.",
+  "@cloudinaryUploadFailed": {
+    "placeholders": {
+      "statusCode": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToUploadImage": "Failed to upload image: {error}. Check internet/credentials.",
+  "@failedToUploadImage": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "productAddedSuccessfully": "Product added successfully!",
+  "enterValidNumbers": "Please enter valid numbers for price, discount, and quantity.",
+  "failedToAddProduct": "Failed to add product: {error}",
+  "@failedToAddProduct": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "categoryNameCannotBeEmpty": "Category name cannot be empty.",
+  "categoryIconCannotBeEmpty": "Category icon cannot be empty.",
+  "categoryAdded": "Category \"{categoryName}\" added!",
+  "@categoryAdded": {
+    "placeholders": {
+      "categoryName": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToAddCategory": "Failed to add category: {error}",
+  "@failedToAddCategory": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "noCategoriesAvailable": "No categories available. Please add some.",
+  "filterCategory": "Filter by Category",
+  "allCategories": "All Categories",
+  "noProductsFoundMatchingFilters": "No products found matching filters.",
+  "areaAddedSuccessfully": "Area \"{areaName}\" added successfully!",
+  "@areaAddedSuccessfully": {
+    "placeholders": {
+      "areaName": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToAddArea": "Failed to add area: {error}",
+  "@failedToAddArea": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "areaDeleted": "Area \"{areaName}\" deleted.",
+  "@areaDeleted": {
+    "placeholders": {
+      "areaName": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToDeleteArea": "Failed to delete area: {error}",
+  "@failedToDeleteArea": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "noShippingAreasFound": "No shipping areas found. Add some above.",
+  "updateOrderStatus": "Update Order Status",
+  "newStatus": "New Status",
+  "orderStatusUpdated": "Order {orderId} status updated to \"{newStatus}\"!",
+  "@orderStatusUpdated": {
+    "placeholders": {
+      "newStatus": {
+        "type": "Object"
+      },
+      "orderId": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToUpdateOrderStatus": "Failed to update order status: {error}",
+  "@failedToUpdateOrderStatus": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotLaunchDialer": "Could not launch dialer for {phoneNumber}. Make sure a dialer app is installed.",
+  "@couldNotLaunchDialer": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "Object"
+      }
+    }
+  },
+  "phoneNumberNotAvailable": "Phone number not available.",
+  "noOrderDataAvailable": "No order data available for analytics.",
+  "dashboardAnalytics": "Dashboard Analytics",
+  "changePasswordComingSoon": "Change Password functionality (coming soon)!",
+  "version": "Version",
+  "aboutUsContent": "Bubbles E-commerce is your one-stop shop for quality products at affordable prices. We are committed to providing excellent customer service and a seamless shopping experience.",
+  "logout": "Logout",
+  "accessDenied": "Access Denied",
+  "verifyingAdminAccess": "Verifying admin access...",
+  "notAuthorizedToViewAdminPanel": "You are not authorized to view the admin panel.",
+  "backToHome": "Back to Home",
+  "addProductTabTitle": "Add Product",
+  "manageOfferCodesTitle": "Manage Offer Codes",
+  "failedToLoadPreviousAddressDetails": "Failed to load previous address details",
+  "pleaseEnterPhoneNumber": "Please enter your phone number",
+  "pleaseEnterValidEgyptianPhoneNumber": "Please enter a valid Egyptian phone number",
+  "pleaseEnterFieldName": "Please enter {fieldName}",
+  "@pleaseEnterFieldName": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectShippingArea": "Please select shipping area",
+  "basketIsEmptyCanNotCheckout": "Basket is empty, cannot checkout",
+  "selectPaymentMethod": "Select Payment Method",
+  "cashOnDelivery": "Cash on Delivery",
+  "vodafoneCash": "Vodafone Cash",
+  "etisalatCash": "Etisalat Cash",
+  "weCash": "We Cash",
+  "instapay": "Instapay",
+  "paymentInstruction": "Choose your preferred payment method",
+  "processingOrder": "Processing Order",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "shippingInformation": "Shipping Information",
+  "orderSummary": "Order Summary",
+  "estimatedDelivery": "Estimated Delivery",
+  "freeShipping": "Free Shipping",
+  "applyOfferCode": "Apply Offer Code",
+  "offerCodeAddedSuccessfully": "Offer code {code} added successfully",
+  "@offerCodeAddedSuccessfully": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "basketIsEmpty": "Your basket is empty",
+  "addProductsToGetStarted": "Add some products to get started",
+  "clearBasket": "Clear Basket",
+  "clearBasketConfirmTitle": "Clear Basket",
+  "clearBasketConfirmContent": "Are you sure you want to clear your basket?",
+  "clear": "Clear",
+  "basketCleared": "Basket cleared",
+  "removeProduct": "Remove Product",
+  "proceedToCheckout": "Proceed to Checkout",
+  "loadingProducts": "Loading products...",
+  "errorLoadingProducts": "Error loading products",
+  "productsIn": "Products in",
+  "checkBackLater": "Check back later",
+  "noProductsInCategory": "No products found in {category}",
+  "@noProductsInCategory": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmOrder": "Confirm Order",
+  "orderTotal": "Order Total: EGP {total}",
+  "@orderTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryTo": "Delivery to",
+  "areYouSureWantToPlaceOrder": "Are you sure you want to place this order?",
+  "confirm": "Confirm",
+  "userNotLoggedInToPlaceOrder": "User not logged in to place order",
+  "productDoesNotExistInInventory": "Product {name} does not exist in inventory",
+  "@productDoesNotExistInInventory": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughStock": "Not enough stock for {name}. Available: {available}, Requested: {requested}",
+  "@notEnoughStock": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "available": {
+        "type": "int"
+      },
+      "requested": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToPlaceOrder": "Failed to place order: {error}",
+  "@failedToPlaceOrder": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotLaunchUrl": "Could not launch URL: {url}",
+  "@couldNotLaunchUrl": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentDialerPrompt": "Dial {code} to pay EGP {amount}",
+  "@paymentDialerPrompt": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ok": "OK",
+  "tryAgain": "Try Again",
+  "itemsOrdered": "Items Ordered",
+  "whatsAppUs": "WhatsApp Us",
+  "callUs": "Call Us",
+  "needAssistance": "Need Assistance?",
+  "supportTeamHelp": "Our support team is here to help you",
+  "availableBusinessHours": "Available during business hours: 9 AM - 6 PM",
+  "failedToCancelOrder": "Failed to cancel order: {error}",
+  "@failedToCancelOrder": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "editProfile": "Edit Profile",
+  "fieldNameMustBeNumber": "{fieldName} must be a number",
+  "@fieldNameMustBeNumber": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "errorLoadingCategories": "Error loading categories: {error}",
+  "@errorLoadingCategories": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "searchProductsToAdd": "Search products to add",
+  "searchProductByName": "Search product by name",
+  "selectedRelatedProducts": "Selected Related Products",
+  "items": "{count} items",
+  "@items": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unnamedProduct": "Unnamed Product",
+  "noOtherRelatedProductsFound": "No other related products found",
+  "markAsOffer": "Mark as Offer",
+  "pleaseLoginToViewOrders": "Please login to view your orders",
+  "itemRemoved": "Item {name} removed",
+  "@itemRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "basketEmptyCannotCheckout": "Basket is empty, cannot checkout",
+  "yesterdayAt": "Yesterday at {hour}:{minute}",
+  "@yesterdayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "String"
+      },
+      "minute": {
+        "type": "String"
+      }
+    }
+  },
+  "todayAt": "Today at {hour}:{minute}",
+  "@todayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "String"
+      },
+      "minute": {
+        "type": "String"
+      }
+    }
+  },
+  "at": "at",
+  "mon": "Mon",
+  "tue": "Tue",
+  "wed": "Wed",
+  "thu": "Thu",
+  "fri": "Fri",
+  "sat": "Sat",
+  "sun": "Sun",
+  "itemCount": "{count} items",
+  "@itemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discountPercentage": "Discount Percentage",
+  "addOfferCode": "Add Offer Code",
+  "offerCodeRequired": "Offer code is required",
+  "failedToAddOfferCode": "Failed to add offer code: {error}",
+  "@failedToAddOfferCode": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "offerCodeRemoved": "Offer code {code} removed",
+  "@offerCodeRemoved": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToRemoveOfferCode": "Failed to remove offer code: {error}",
+  "@failedToRemoveOfferCode": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noOfferCodesFound": "No offer codes found",
+  "egyptianMobileNumberHint": "Egyptian mobile number (11 digits)",
+  "paymentMethod": "Payment Method",
+  "offerCode": "Offer Code",
+  "category": "Category",
+  "offer": "Offer",
+  "yes": "Yes",
+  "no": "No",
+  "notAvailableAbbreviation": "N/A",
+  "clearFilters": "Clear Filters",
+  "noCategoriesAvailableForFiltering": "No categories available for filtering",
+  "noProductsFoundSimple": "No products found",
+  "productDeletedSuccessfully": "Product {productName} deleted successfully",
+  "@productDeletedSuccessfully": {
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToDeleteProduct": "Failed to delete product: {error}",
+  "@failedToDeleteProduct": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "areYouSureDeleteProductAdmin": "Are you sure you want to delete \"{productName}\"? This action cannot be undone.",
+  "@areYouSureDeleteProductAdmin": {
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "editProduct": "Edit Product",
+  "pleaseSelectCategory": "Please select a category",
+  "productUpdatedSuccessfully": "Product updated successfully",
+  "failedToUpdateProduct": "Failed to update product: {error}",
+  "@failedToUpdateProduct": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "priceAndQuantityCannotBeNegative": "Price and quantity cannot be negative",
+  "failedToSearchProducts": "Failed to search products: {error}",
+  "@failedToSearchProducts": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noRelatedProductsFound": "No related products found",
+  "noShippingAreasAvailable": "No shipping areas available",
+  "orderItems": "{count} items ordered",
+  "@orderItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterByCategory": "Filter by Category",
+  "selectShippingArea": "Select Shipping Area",
+  "noProductsFoundGeneral": "No products found",
+  "storeLocationTitle": "Store Location",
+  "nearbyShopsTitle": "Nearby Shops",
+  "petAdoptionTitle": "Pet Adoption",
+  "findYourPerfectCompanion": "Find Your Perfect Companion",
+  "lovingPetsLookingForHomes": "Loving pets looking for homes",
+  "visitOurPhysicalStore": "Visit Our Physical Store",
+  "storeInformation": "Store Information",
+  "address": "Address",
+  "phone": "Phone",
+  "operatingHours": "Operating Hours",
+  "findUsOnMap": "Find Us on Map",
+  "interactiveMap": "Interactive Map",
+  "clickButtonsBelowToOpen": "Click buttons below to open in Google Maps",
+  "openInMaps": "Open in Maps",
+  "getDirections": "Get Directions",
+  "callStore": "Call Store",
+  "storeFeatures": "Store Features",
+  "discoverLocalBusinesses": "Discover Local Businesses",
+  "supportYourLocalCommunity": "Support your local community",
+  "nearbyShopsUpdated": "Nearby shops updated",
+  "call": "Call",
+  "browsePets": "Browse Pets",
+  "postAd": "Post Ad",
+  "postPetForAdoption": "Post Pet for Adoption",
+  "helpPetFindLovingHome": "Help a pet find a loving home",
+  "addPhotos": "Add Photos",
+  "petInformation": "Pet Information",
+  "petName": "Pet Name",
+  "petType": "Pet Type",
+  "gender": "Gender",
+  "age": "Age",
+  "breed": "Breed",
+  "healthInformation": "Health Information",
+  "vaccinated": "Vaccinated",
+  "spayedNeutered": "Spayed/Neutered",
+  "contactInformation": "Contact Information",
+  "yourName": "Your Name",
+  "yourPhoneNumber": "Your Phone Number",
+  "postPetForAdoptionButton": "Post Pet for Adoption",
+  "posting": "Posting...",
+  "contact": "Contact",
+  "pleaseEnterPetName": "Please enter pet name",
+  "pleaseEnterAge": "Please enter age",
+  "pleaseEnterDescription": "Please enter description",
+  "pleaseEnterYourName": "Please enter your name",
+  "pleaseEnterPhoneNumber": "Please enter your phone number",
+  "pleaseAddAtLeastOnePhoto": "Please add at least one photo",
+  "petAdPostedSuccessfully": "Pet ad posted successfully!",
+  "errorPostingAd": "Error posting ad: {error}",
+  "@errorPostingAd": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noPetsAvailableForAdoption": "No pets available for adoption",
+  "beFirstToPostPet": "Be the first to post a pet for adoption!",
+  "errorLoadingPets": "Error loading pets",
+  "productDetails": "Product Details",
+  "wishlistTitle": "My Wishlist",
+  "supportSmallBusinessTitle": "Support Small Businesses",
+  "manageNearbyShopsTitle": "Nearby Shops",
+  "manageAppFeaturesTitle": "App Features",
+  "appFeaturesManagement": "App Features Management",
+  "controlWhichFeaturesVisible": "Control which features are visible to customers",
+  "supportSmallBusinessScreen": "Support Small Businesses Screen",
+  "toggleVisibilityDescription": "Toggle the visibility of the Support Small Businesses section in the customer app drawer",
+  "featureIsEnabled": "Feature is ENABLED",
+  "featureIsDisabled": "Feature is DISABLED",
+  "customersCanSeeThisScreen": "Customers can see this screen in the app drawer",
+  "thisScreenIsHidden": "This screen is hidden from customers",
+  "customizationOptions": "Customization Options",
+  "menuTitle": "Menu Title",
+  "menuIcon": "Menu Icon",
+  "previewInAppDrawer": "Preview in App Drawer",
+  "saveFeatureSettings": "Save Feature Settings",
+  "saving": "Saving...",
+  "featureSettingsSavedSuccessfully": "Feature settings saved successfully!",
+  "howItWorks": "How it works",
+  "howItWorksDescription": "• When enabled, customers will see the menu item in their app drawer\n• When disabled, the menu item is completely hidden\n• Changes take effect immediately for all users\n• You can customize the title and icon anytime\n• Use the \"Shops\" tab to add businesses to this section",
+  "addNewShop": "Add New Shop",
+  "chooseDestinationAndAddDetails": "Choose destination and add shop details",
+  "addToCollection": "Add to Collection:",
+  "shopImagesMultiple": "Shop Images * (You can select multiple images)",
+  "tapToSelectShopImages": "Tap to select shop images",
+  "youCanSelectMultipleImages": "You can select multiple images",
+  "addMore": "Add More",
+  "shopNameRequired": "Shop Name *",
+  "pleaseEnterShopName": "Please enter shop name",
+  "categoryRequired": "Category *",
+  "categoriesForNearbyShops": "Categories for nearby shops",
+  "categoriesForSmallBusinesses": "Categories for small businesses",
+  "floor": "Floor",
+  "groundFloor": "Ground Floor",
+  "tellCustomersAboutShop": "Tell customers about this shop...",
+  "tellCustomersAboutBusiness": "Tell customers about this business...",
+  "addToNearbyShops": "Add to Nearby Shops",
+  "addToSupportSmallBusinesses": "Add to Support Small Businesses",
+  "adding": "Adding...",
+  "shopAddedSuccessfully": "Shop added successfully!",
+  "businessAddedSuccessfully": "Business added successfully!",
+  "pleaseSelectAtLeastOneImage": "Please select at least one image for the shop",
+  "manageShops": "Manage Shops",
+  "editActivateOrRemoveShops": "Edit, activate, or remove shops from collections",
+  "noShopsInCollectionYet": "No shops in {collection} yet",
+  "@noShopsInCollectionYet": {
+    "placeholders": {
+      "collection": {
+        "type": "String"
+      }
+    }
+  },
+  "addYourFirstShop": "Add your first shop using the \"Add Shop\" tab!",
+  "images": "{count} images",
+  "@images": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "floorLabel": "Floor: {floor}",
+  "@floorLabel": {
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      }
+    }
+  },
+  "active": "Active",
+  "inactive": "Inactive",
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "deleteShop": "Delete Shop",
+  "areYouSureDeleteShop": "Are you sure you want to delete \"{shopName}\"?",
+  "@areYouSureDeleteShop": {
+    "placeholders": {
+      "shopName": {
+        "type": "String"
+      }
+    }
+  },
+  "shopDeletedSuccessfully": "Shop deleted successfully",
+  "shopActivated": "Shop activated",
+  "shopDeactivated": "Shop deactivated",
+  "errorUpdatingShop": "Error updating shop: {error}",
+  "@errorUpdatingShop": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeletingShop": "Error deleting shop: {error}",
+  "@errorDeletingShop": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorLoadingShops": "Error loading shops",
+  "couldNotLaunchPhoneDialer": "Could not launch phone dialer",
+  "errorLaunchingDialer": "Error launching dialer: {error}",
+  "@errorLaunchingDialer": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "supportLocalEntrepreneurs": "Support Local Entrepreneurs",
+  "helpSmallBusinessesThrive": "Help small businesses thrive in your community",
+  "loadingBusinesses": "Loading businesses...",
+  "errorLoadingBusinesses": "Error loading businesses",
+  "noSmallBusinessesAvailable": "No small businesses available",
+  "checkBackLaterForEntrepreneurs": "Check back later for local entrepreneurs!",
+  "smallBusinessesUpdated": "Small businesses updated",
+  "removedFromWishlist": "Removed from wishlist",
+  "addedToWishlist": "Added to wishlist",
+  "handmade": "Handmade",
+  "artAndCrafts": "Art & Crafts",
+  "foodAndBeverage": "Food & Beverage",
+  "services": "Services",
+  "technology": "Technology",
+  "consulting": "Consulting",
+  "retail": "Retail",
+  "fitnessAndWellness": "Fitness & Wellness",
+  "education": "Education",
+  "other": "Other",
+  "business": "Business",
+  "heart": "Heart",
+  "handshake": "Handshake",
+  "support": "Support",
+  "offer": "Offer",
+  "volunteer": "Volunteer",
+  "group": "Group",
+  "store": "Store",
+  "errorLoadingSettings": "Error loading settings: {error}",
+  "@errorLoadingSettings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSavingSettings": "Error saving settings: {error}",
+  "@errorSavingSettings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingFeatureSettings": "Loading feature settings...",
+  "failedToUploadImages": "Failed to upload images",
+  "errorAddingShop": "Error adding shop: {error}",
+  "@errorAddingShop": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nearbyShops": "Nearby Shops",
+  "myWishlist": "My Wishlist",
+  "petAdoption": "Pet Adoption"
+}

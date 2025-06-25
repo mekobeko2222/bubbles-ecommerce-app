@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "630936850906",
+    "project_id": "bubbles-e-commerce-backend",
+    "storage_bucket": "bubbles-e-commerce-backend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630936850906:android:8c5ea349064e29f09530e3",
+        "android_client_info": {
+          "package_name": "com.example.bubbles_ecommerce_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhk-U1gW6dWWabrgw6me5byMsihtPwA9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,845 @@
+{
+  "appTitle": "تطبيق فقاعات للتجارة الإلكترونية",
+  "homeScreenTitle": "فقاعات للتجارة الإلكترونية",
+  "myBasketTitle": "سلة المشتريات",
+  "checkoutTitle": "الدفع",
+  "orderConfirmedTitle": "تم تأكيد الطلب!",
+  "myOrdersTitle": "طلباتي",
+  "userProfileTitle": "ملف المستخدم",
+  "aboutUsTitle": "من نحن",
+  "adminPanelTitle": "لوحة تحكم المسؤول",
+  "continueShopping": "متابعة التسوق",
+  "totalPrice": "السعر الإجمالي",
+  "subtotal": "المجموع الفرعي",
+  "shippingFee": "رسوم الشحن",
+  "grandTotal": "المجموع الكلي",
+  "placeOrder": "إتمام الطلب",
+  "addToBasket": "أضف إلى السلة",
+  "outOfStock": "نفدت الكمية",
+  "relatedProducts": "منتجات ذات صلة",
+  "description": "الوصف",
+  "availability": "التوفر",
+  "inStock": "متوفر ({quantity})",
+  "@inStock": {
+    "placeholders": {
+      "quantity": {
+        "type": "Object"
+      }
+    }
+  },
+  "quantity": "الكمية",
+  "pricePerItem": "{price} جنيه مصري للقطعة",
+  "@pricePerItem": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "totalItemPrice": "الإجمالي: {totalPrice} جنيه مصري",
+  "@totalItemPrice": {
+    "placeholders": {
+      "totalPrice": {
+        "type": "Object"
+      }
+    }
+  },
+  "email": "البريد الإلكتروني",
+  "displayName": "اسم العرض",
+  "defaultShippingAddress": "عنوان الشحن الافتراضي",
+  "shippingArea": "منطقة الشحن",
+  "buildingNumber": "رقم المبنى",
+  "floorNumber": "رقم الطابق",
+  "apartmentNumber": "رقم الشقة",
+  "phoneNumber": "رقم الهاتف",
+  "saveChanges": "حفظ التغييرات",
+  "changePassword": "تغيير كلمة المرور",
+  "loadingData": "جاري تحميل البيانات...",
+  "errorLoadingData": "خطأ في تحميل البيانات: {error}",
+  "@errorLoadingData": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "noDataFound": "لا توجد بيانات.",
+  "productName": "اسم المنتج",
+  "price": "السعر",
+  "discount": "الخصم (%)",
+  "quantityInStock": "الكمية في المخزون",
+  "productDescription": "وصف المنتج",
+  "tags": "الكلمات الدلالية (مفصولة بفاصلة للمنتجات ذات الصلة)",
+  "addProductImages": "أضف صور المنتج",
+  "addMoreImages": "أضف المزيد من الصور ({current}/{max})",
+  "@addMoreImages": {
+    "placeholders": {
+      "current": {
+        "type": "Object"
+      },
+      "max": {
+        "type": "Object"
+      }
+    }
+  },
+  "selectCategory": "اختر الفئة",
+  "addCategory": "أضف فئة جديدة",
+  "categoryName": "اسم الفئة",
+  "categoryIcon": "أيقونة الفئة (رمز تعبيري)",
+  "addProduct": "أضف منتج",
+  "manageProducts": "إدارة المنتجات",
+  "manageAreas": "إدارة المناطق",
+  "orders": "الطلبات",
+  "analytics": "التحليلات",
+  "addNewShippingArea": "أضف منطقة شحن جديدة",
+  "areaName": "اسم المنطقة",
+  "addArea": "أضف منطقة",
+  "shippingFeeAmount": "رسوم الشحن",
+  "totalOrders": "إجمالي الطلبات",
+  "totalSales": "إجمالي المبيعات",
+  "ordersByStatus": "الطلبات حسب الحالة",
+  "orderId": "معرف الطلب",
+  "userEmail": "بريد المستخدم الإلكتروني",
+  "status": "الحالة",
+  "orderDate": "تاريخ الطلب",
+  "updateStatus": "تحديث الحالة",
+  "reorder": "إعادة الطلب",
+  "cancelOrder": "إلغاء الطلب",
+  "loadingOrders": "جاري تحميل طلباتك...",
+  "errorLoadingOrders": "خطأ في تحميل الطلبات",
+  "noOrdersYet": "لا توجد طلبات بعد",
+  "orderHistoryWillAppearHere": "سجل طلباتك سيظهر هنا",
+  "cannotReorderEmptyList": "لا يمكن إعادة طلب قائمة فارغة من العناصر.",
+  "addingItemsToBasket": "جاري إضافة العناصر إلى السلة...",
+  "uniqueItemsAddedToBasket": "تمت إضافة {count} عناصر فريدة إلى سلة المشتريات!",
+  "@uniqueItemsAddedToBasket": {
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "view": "عرض",
+  "searchProducts": "البحث عن المنتجات...",
+  "searchResults": "نتائج البحث",
+  "productsOnOffer": "منتجات معروضة للبيع",
+  "noProductsFound": "لم يتم العثور على منتجات لـ \"{query}\".",
+  "@noProductsFound": {
+    "placeholders": {
+      "query": {
+        "type": "Object"
+      }
+    }
+  },
+  "noOffersFound": "لا توجد عروض.",
+  "shopByCategory": "تسوق حسب الفئة",
+  "unavailable": "غير متاح",
+  "contactUs": "اتصل بنا",
+  "ourMission": "مهمتنا",
+  "whatWeOffer": "ما نقدمه",
+  "secureCheckout": "دفع آمن",
+  "realtimeOrderTracking": "تتبع الطلبات في الوقت الفعلي",
+  "diverseProductCatalog": "كتالوج منتجات متنوع",
+  "easyNavigation": "سهولة التصفح",
+  "allRightsReserved": "© 2024 فقاعات للتجارة الإلكترونية. جميع الحقوق محفوظة.",
+  "thankYouForYourOrder": "شكراً لطلبك!",
+  "orderPlacedSuccessfully": "تم تقديم طلبك بنجاح.",
+  "orderDetails": "تفاصيل الطلب:",
+  "shippingAddress": "عنوان الشحن:",
+  "imageLoadingError": "خطأ في تحميل الصورة لـ {itemName} ({imageUrl}): {error}",
+  "@imageLoadingError": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      },
+      "imageUrl": {
+        "type": "Object"
+      },
+      "itemName": {
+        "type": "Object"
+      }
+    }
+  },
+  "orderItemImageNotSupported": "صورة عنصر الطلب غير مدعومة",
+  "orderCannotBeCancelled": "لا يمكن إلغاء الطلب",
+  "orderCurrently": "هذا الطلب حاليًا \"{status}\" ولا يمكن إلغاؤه من قبلك. يرجى الاتصال بدعم العملاء إذا كنت بحاجة إلى مزيد من المساعدة.",
+  "@orderCurrently": {
+    "placeholders": {
+      "status": {
+        "type": "Object"
+      }
+    }
+  },
+  "confirmDeletion": "تأكيد الحذف",
+  "areYouSureDeleteProduct": "هل أنت متأكد أنك تريد حذف \"{productName}\"؟ لا يمكن التراجع عن هذا الإجراء.",
+  "@areYouSureDeleteProduct": {
+    "placeholders": {
+      "productName": {
+        "type": "Object"
+      }
+    }
+  },
+  "delete": "حذف",
+  "cancel": "إلغاء",
+  "cloudinaryUploadFailed": "فشل تحميل Cloudinary: {statusCode}. تحقق من وحدة تحكم Cloudinary.",
+  "@cloudinaryUploadFailed": {
+    "placeholders": {
+      "statusCode": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToUploadImage": "فشل تحميل الصورة: {error}. تحقق من الإنترنت/بيانات الاعتماد.",
+  "@failedToUploadImage": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "productAddedSuccessfully": "تمت إضافة المنتج بنجاح!",
+  "enterValidNumbers": "الرجاء إدخال أرقام صحيحة للسعر والخصم والكمية.",
+  "failedToAddProduct": "فشل إضافة المنتج: {error}",
+  "@failedToAddProduct": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "categoryNameCannotBeEmpty": "لا يمكن أن يكون اسم الفئة فارغًا.",
+  "categoryIconCannotBeEmpty": "لا يمكن أن تكون أيقونة الفئة فارغة.",
+  "categoryAdded": "تمت إضافة الفئة \"{categoryName}\"!",
+  "@categoryAdded": {
+    "placeholders": {
+      "categoryName": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToAddCategory": "فشل إضافة الفئة: {error}",
+  "@failedToAddCategory": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "noCategoriesAvailable": "لا توجد فئات متاحة. يرجى إضافة بعض.",
+  "filterCategory": "تصفية حسب الفئة",
+  "allCategories": "جميع الفئات",
+  "noProductsFoundMatchingFilters": "لم يتم العثور على منتجات مطابقة للمرشحات.",
+  "areaAddedSuccessfully": "تمت إضافة المنطقة \"{areaName}\" بنجاح!",
+  "@areaAddedSuccessfully": {
+    "placeholders": {
+      "areaName": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToAddArea": "فشل إضافة المنطقة: {error}",
+  "@failedToAddArea": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "areaDeleted": "تم حذف المنطقة \"{areaName}\".",
+  "@areaDeleted": {
+    "placeholders": {
+      "areaName": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToDeleteArea": "فشل حذف المنطقة: {error}",
+  "@failedToDeleteArea": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "noShippingAreasFound": "لم يتم العثور على مناطق شحن. أضف بعضها أعلاه.",
+  "updateOrderStatus": "تحديث حالة الطلب",
+  "newStatus": "الحالة الجديدة",
+  "orderStatusUpdated": "تم تحديث حالة الطلب {orderId} إلى \"{newStatus}\"!",
+  "@orderStatusUpdated": {
+    "placeholders": {
+      "newStatus": {
+        "type": "Object"
+      },
+      "orderId": {
+        "type": "Object"
+      }
+    }
+  },
+  "failedToUpdateOrderStatus": "فشل تحديث حالة الطلب: {error}",
+  "@failedToUpdateOrderStatus": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "couldNotLaunchDialer": "تعذر تشغيل برنامج الاتصال لـ {phoneNumber}. تأكد من تثبيت تطبيق الاتصال.",
+  "@couldNotLaunchDialer": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "Object"
+      }
+    }
+  },
+  "phoneNumberNotAvailable": "رقم الهاتف غير متاح.",
+  "noOrderDataAvailable": "لا توجد بيانات طلب متاحة للتحليلات.",
+  "dashboardAnalytics": "تحليلات لوحة التحكم",
+  "changePasswordComingSoon": "وظيفة تغيير كلمة المرور (قريبًا)!",
+  "version": "الإصدار",
+  "aboutUsContent": "تطبيق فقاعات للتجارة الإلكترونية هو وجهتك الوحيدة للمنتجات عالية الجودة بأسعار معقولة. نحن ملتزمون بتقديم خدمة عملاء ممتازة وتجربة تسوق سلسة.",
+  "logout": "تسجيل الخروج",
+  "accessDenied": "تم رفض الوصول",
+  "verifyingAdminAccess": "جاري التحقق من صلاحيات المسؤول...",
+  "notAuthorizedToViewAdminPanel": "أنت غير مصرح لك بمشاهدة لوحة تحكم المسؤول.",
+  "backToHome": "العودة إلى الصفحة الرئيسية",
+  "addProductTabTitle": "إضافة منتج",
+  "manageOfferCodesTitle": "إدارة أكواد العروض",
+  "failedToLoadPreviousAddressDetails": "فشل تحميل تفاصيل العنوان السابق",
+  "pleaseEnterPhoneNumber": "الرجاء إدخال رقم هاتفك",
+  "pleaseEnterValidEgyptianPhoneNumber": "الرجاء إدخال رقم هاتف مصري صحيح",
+  "pleaseEnterFieldName": "الرجاء إدخال {fieldName}",
+  "@pleaseEnterFieldName": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectShippingArea": "الرجاء اختيار منطقة الشحن",
+  "basketIsEmptyCanNotCheckout": "السلة فارغة، لا يمكن الدفع",
+  "selectPaymentMethod": "اختر طريقة الدفع",
+  "cashOnDelivery": "الدفع عند الاستلام",
+  "vodafoneCash": "فودافون كاش",
+  "etisalatCash": "اتصالات كاش",
+  "weCash": "وي كاش",
+  "instapay": "إنستاباي",
+  "paymentInstruction": "اختر طريقة الدفع المفضلة لديك",
+  "processingOrder": "جاري معالجة الطلب",
+  "today": "اليوم",
+  "tomorrow": "غدًا",
+  "shippingInformation": "معلومات الشحن",
+  "orderSummary": "ملخص الطلب",
+  "estimatedDelivery": "تاريخ التسليم المقدر",
+  "freeShipping": "شحن مجاني",
+  "applyOfferCode": "تطبيق رمز العرض",
+  "offerCodeAddedSuccessfully": "تمت إضافة رمز العرض {code} بنجاح",
+  "@offerCodeAddedSuccessfully": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "basketIsEmpty": "سلة المشتريات فارغة",
+  "addProductsToGetStarted": "أضف بعض المنتجات للبدء",
+  "clearBasket": "مسح السلة",
+  "clearBasketConfirmTitle": "مسح السلة",
+  "clearBasketConfirmContent": "هل أنت متأكد أنك تريد مسح سلة المشتريات الخاصة بك؟",
+  "clear": "مسح",
+  "basketCleared": "تم مسح السلة",
+  "removeProduct": "إزالة المنتج",
+  "proceedToCheckout": "المتابعة إلى الدفع",
+  "loadingProducts": "جاري تحميل المنتجات...",
+  "errorLoadingProducts": "خطأ في تحميل المنتجات",
+  "productsIn": "منتجات في",
+  "checkBackLater": "تحقق لاحقًا",
+  "noProductsInCategory": "لا توجد منتجات في فئة {category}",
+  "@noProductsInCategory": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmOrder": "تأكيد الطلب",
+  "orderTotal": "إجمالي الطلب: {total} جنيه مصري",
+  "@orderTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryTo": "التوصيل إلى",
+  "areYouSureWantToPlaceOrder": "هل أنت متأكد أنك تريد تقديم هذا الطلب؟",
+  "confirm": "تأكيد",
+  "userNotLoggedInToPlaceOrder": "المستخدم غير مسجل الدخول لتقديم الطلب",
+  "productDoesNotExistInInventory": "المنتج {name} غير موجود في المخزون",
+  "@productDoesNotExistInInventory": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notEnoughStock": "لا يوجد مخزون كافٍ لـ {name}. المتاح: {available}، المطلوب: {requested}",
+  "@notEnoughStock": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "available": {
+        "type": "int"
+      },
+      "requested": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToPlaceOrder": "فشل في تقديم الطلب: {error}",
+  "@failedToPlaceOrder": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotLaunchUrl": "تعذر تشغيل الرابط: {url}",
+  "@couldNotLaunchUrl": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentDialerPrompt": "اطلب {code} لدفع {amount} جنيه مصري",
+  "@paymentDialerPrompt": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ok": "موافق",
+  "tryAgain": "حاول مرة أخرى",
+  "itemsOrdered": "العناصر المطلوبة",
+  "whatsAppUs": "راسلنا واتساب",
+  "callUs": "اتصل بنا",
+  "needAssistance": "هل تحتاج مساعدة؟",
+  "supportTeamHelp": "فريق الدعم لدينا هنا لمساعدتك",
+  "availableBusinessHours": "متاح خلال ساعات العمل: 9 صباحًا - 6 مساءً",
+  "failedToCancelOrder": "فشل إلغاء الطلب: {error}",
+  "@failedToCancelOrder": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "editProfile": "تعديل الملف الشخصي",
+  "fieldNameMustBeNumber": "{fieldName} يجب أن يكون رقمًا",
+  "@fieldNameMustBeNumber": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "errorLoadingCategories": "خطأ في تحميل الفئات: {error}",
+  "@errorLoadingCategories": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "searchProductsToAdd": "ابحث عن المنتجات لإضافتها",
+  "searchProductByName": "ابحث عن المنتج بالاسم",
+  "selectedRelatedProducts": "المنتجات ذات الصلة المختارة",
+  "items": "{count} عناصر",
+  "@items": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unnamedProduct": "منتج بدون اسم",
+  "noOtherRelatedProductsFound": "لم يتم العثور على منتجات أخرى ذات صلة",
+  "markAsOffer": "ضع كعرض",
+  "pleaseLoginToViewOrders": "الرجاء تسجيل الدخول لعرض طلباتك",
+  "itemRemoved": "تمت إزالة العنصر {name}",
+  "@itemRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "basketEmptyCannotCheckout": "السلة فارغة، لا يمكن الدفع",
+  "yesterdayAt": "أمس في {hour}:{minute}",
+  "@yesterdayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "String"
+      },
+      "minute": {
+        "type": "String"
+      }
+    }
+  },
+  "todayAt": "اليوم في {hour}:{minute}",
+  "@todayAt": {
+    "placeholders": {
+      "hour": {
+        "type": "String"
+      },
+      "minute": {
+        "type": "String"
+      }
+    }
+  },
+  "at": "في",
+  "mon": "الاثنين",
+  "tue": "الثلاثاء",
+  "wed": "الأربعاء",
+  "thu": "الخميس",
+  "fri": "الجمعة",
+  "sat": "السبت",
+  "sun": "الأحد",
+  "itemCount": "{count} عناصر",
+  "@itemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discountPercentage": "نسبة الخصم",
+  "addOfferCode": "إضافة رمز عرض",
+  "offerCodeRequired": "رمز العرض مطلوب",
+  "failedToAddOfferCode": "فشل إضافة رمز العرض: {error}",
+  "@failedToAddOfferCode": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "offerCodeRemoved": "تمت إزالة رمز العرض {code}",
+  "@offerCodeRemoved": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToRemoveOfferCode": "فشل إزالة رمز العرض: {error}",
+  "@failedToRemoveOfferCode": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noOfferCodesFound": "لم يتم العثور على رموز عروض",
+  "egyptianMobileNumberHint": "رقم جوال مصري (11 رقمًا)",
+  "paymentMethod": "طريقة الدفع",
+  "offerCode": "رمز العرض",
+  "category": "الفئة",
+  "offer": "عرض",
+  "yes": "نعم",
+  "no": "لا",
+  "notAvailableAbbreviation": "غير متاح",
+  "clearFilters": "مسح المرشحات",
+  "noCategoriesAvailableForFiltering": "لا توجد فئات متاحة للتصفية",
+  "noProductsFoundSimple": "لم يتم العثور على منتجات",
+  "productDeletedSuccessfully": "تم حذف المنتج {productName} بنجاح",
+  "@productDeletedSuccessfully": {
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToDeleteProduct": "فشل حذف المنتج: {error}",
+  "@failedToDeleteProduct": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "areYouSureDeleteProductAdmin": "هل أنت متأكد أنك تريد حذف \"{productName}\"؟ لا يمكن التراجع عن هذا الإجراء.",
+  "@areYouSureDeleteProductAdmin": {
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "editProduct": "تعديل المنتج",
+  "pleaseSelectCategory": "الرجاء اختيار فئة",
+  "productUpdatedSuccessfully": "تم تحديث المنتج بنجاح",
+  "failedToUpdateProduct": "فشل تحديث المنتج: {error}",
+  "@failedToUpdateProduct": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "priceAndQuantityCannotBeNegative": "لا يمكن أن يكون السعر والكمية سالبة",
+  "failedToSearchProducts": "فشل البحث عن المنتجات: {error}",
+  "@failedToSearchProducts": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noRelatedProductsFound": "لم يتم العثور على منتجات ذات صلة",
+  "noShippingAreasAvailable": "لا توجد مناطق شحن متاحة",
+  "orderItems": "{count} عناصر مطلوبة",
+  "@orderItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterByCategory": "تصفية حسب الفئة",
+  "selectShippingArea": "اختر منطقة الشحن",
+  "noProductsFoundGeneral": "لم يتم العثور على منتجات",
+  "storeLocationTitle": "موقع المتجر",
+  "nearbyShopsTitle": "المتاجر القريبة",
+  "petAdoptionTitle": "تبني الحيوانات الأليفة",
+  "findYourPerfectCompanion": "اعثر على رفيقك المثالي",
+  "lovingPetsLookingForHomes": "حيوانات أليفة محبة تبحث عن منازل",
+  "visitOurPhysicalStore": "قم بزيارة متجرنا الفعلي",
+  "storeInformation": "معلومات المتجر",
+  "address": "العنوان",
+  "phone": "الهاتف",
+  "operatingHours": "ساعات العمل",
+  "findUsOnMap": "اعثر علينا على الخريطة",
+  "interactiveMap": "خريطة تفاعلية",
+  "clickButtonsBelowToOpen": "انقر على الأزرار أدناه للفتح في خرائط جوجل",
+  "openInMaps": "فتح في الخرائط",
+  "getDirections": "احصل على الاتجاهات",
+  "callStore": "اتصل بالمتجر",
+  "storeFeatures": "مميزات المتجر",
+  "discoverLocalBusinesses": "اكتشف الأعمال المحلية",
+  "supportYourLocalCommunity": "ادعم مجتمعك المحلي",
+  "nearbyShopsUpdated": "تم تحديث المتاجر القريبة",
+  "call": "اتصال",
+  "browsePets": "تصفح الحيوانات الأليفة",
+  "postAd": "نشر إعلان",
+  "postPetForAdoption": "نشر حيوان أليف للتبني",
+  "helpPetFindLovingHome": "ساعد حيوان أليف في العثور على منزل محب",
+  "addPhotos": "إضافة صور",
+  "petInformation": "معلومات الحيوان الأليف",
+  "petName": "اسم الحيوان الأليف",
+  "petType": "نوع الحيوان الأليف",
+  "gender": "الجنس",
+  "age": "العمر",
+  "breed": "السلالة",
+  "healthInformation": "المعلومات الصحية",
+  "vaccinated": "مطعم",
+  "spayedNeutered": "معقم/مخصي",
+  "contactInformation": "معلومات الاتصال",
+  "yourName": "اسمك",
+  "yourPhoneNumber": "رقم هاتفك",
+  "postPetForAdoptionButton": "نشر حيوان أليف للتبني",
+  "posting": "جاري النشر...",
+  "contact": "اتصال",
+  "pleaseEnterPetName": "يرجى إدخال اسم الحيوان الأليف",
+  "pleaseEnterAge": "يرجى إدخال العمر",
+  "pleaseEnterDescription": "يرجى إدخال الوصف",
+  "pleaseEnterYourName": "يرجى إدخال اسمك",
+  "pleaseEnterPhoneNumber": "يرجى إدخال رقم هاتفك",
+  "pleaseAddAtLeastOnePhoto": "يرجى إضافة صورة واحدة على الأقل",
+  "petAdPostedSuccessfully": "تم نشر إعلان الحيوان الأليف بنجاح!",
+  "errorPostingAd": "خطأ في نشر الإعلان: {error}",
+  "@errorPostingAd": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noPetsAvailableForAdoption": "لا توجد حيوانات أليفة متاحة للتبني",
+  "beFirstToPostPet": "كن أول من ينشر حيوان أليف للتبني!",
+  "errorLoadingPets": "خطأ في تحميل الحيوانات الأليفة",
+  "productDetails": "تفاصيل المنتج",
+  "wishlistTitle": "قائمة الأمنيات",
+  "supportSmallBusinessTitle": "دعم الأعمال الصغيرة",
+  "manageNearbyShopsTitle": "المتاجر القريبة",
+  "manageAppFeaturesTitle": "ميزات التطبيق",
+  "appFeaturesManagement": "إدارة ميزات التطبيق",
+  "controlWhichFeaturesVisible": "تحكم في الميزات المرئية للعملاء",
+  "supportSmallBusinessScreen": "شاشة دعم الأعمال الصغيرة",
+  "toggleVisibilityDescription": "تبديل رؤية قسم دعم الأعمال الصغيرة في درج التطبيق للعملاء",
+  "featureIsEnabled": "الميزة مُفعلة",
+  "featureIsDisabled": "الميزة مُعطلة",
+  "customersCanSeeThisScreen": "يمكن للعملاء رؤية هذه الشاشة في درج التطبيق",
+  "thisScreenIsHidden": "هذه الشاشة مخفية عن العملاء",
+  "customizationOptions": "خيارات التخصيص",
+  "menuTitle": "عنوان القائمة",
+  "menuIcon": "أيقونة القائمة",
+  "previewInAppDrawer": "معاينة في درج التطبيق",
+  "saveFeatureSettings": "حفظ إعدادات الميزة",
+  "saving": "جاري الحفظ...",
+  "featureSettingsSavedSuccessfully": "تم حفظ إعدادات الميزة بنجاح!",
+  "howItWorks": "كيف يعمل",
+  "howItWorksDescription": "• عند التفعيل، سيرى العملاء عنصر القائمة في درج التطبيق\n• عند التعطيل، يتم إخفاء عنصر القائمة تمامًا\n• التغييرات تسري على الفور لجميع المستخدمين\n• يمكنك تخصيص العنوان والأيقونة في أي وقت\n• استخدم تبويب \"المتاجر\" لإضافة أعمال إلى هذا القسم",
+  "addNewShop": "إضافة متجر جديد",
+  "chooseDestinationAndAddDetails": "اختر الوجهة وأضف تفاصيل المتجر",
+  "addToCollection": "أضف إلى المجموعة:",
+  "shopImagesMultiple": "صور المتجر * (يمكنك اختيار صور متعددة)",
+  "tapToSelectShopImages": "اضغط لاختيار صور المتجر",
+  "youCanSelectMultipleImages": "يمكنك اختيار صور متعددة",
+  "addMore": "أضف المزيد",
+  "shopNameRequired": "اسم المتجر *",
+  "pleaseEnterShopName": "يرجى إدخال اسم المتجر",
+  "categoryRequired": "الفئة *",
+  "categoriesForNearbyShops": "فئات للمتاجر القريبة",
+  "categoriesForSmallBusinesses": "فئات للأعمال الصغيرة",
+  "floor": "الطابق",
+  "groundFloor": "الطابق الأرضي",
+  "tellCustomersAboutShop": "أخبر العملاء عن هذا المتجر...",
+  "tellCustomersAboutBusiness": "أخبر العملاء عن هذا العمل...",
+  "addToNearbyShops": "أضف إلى المتاجر القريبة",
+  "addToSupportSmallBusinesses": "أضف إلى دعم الأعمال الصغيرة",
+  "adding": "جاري الإضافة...",
+  "shopAddedSuccessfully": "تمت إضافة المتجر بنجاح!",
+  "businessAddedSuccessfully": "تمت إضافة العمل بنجاح!",
+  "pleaseSelectAtLeastOneImage": "يرجى اختيار صورة واحدة على الأقل للمتجر",
+  "manageShops": "إدارة المتاجر",
+  "editActivateOrRemoveShops": "تعديل أو تفعيل أو إزالة المتاجر من المجموعات",
+  "noShopsInCollectionYet": "لا توجد متاجر في {collection} بعد",
+  "@noShopsInCollectionYet": {
+    "placeholders": {
+      "collection": {
+        "type": "String"
+      }
+    }
+  },
+  "addYourFirstShop": "أضف متجرك الأول باستخدام تبويب \"إضافة متجر\"!",
+  "images": "{count} صور",
+  "@images": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "floorLabel": "الطابق: {floor}",
+  "@floorLabel": {
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      }
+    }
+  },
+  "active": "نشط",
+  "inactive": "غير نشط",
+  "activate": "تفعيل",
+  "deactivate": "إلغاء التفعيل",
+  "deleteShop": "حذف المتجر",
+  "areYouSureDeleteShop": "هل أنت متأكد أنك تريد حذف \"{shopName}\"؟",
+  "@areYouSureDeleteShop": {
+    "placeholders": {
+      "shopName": {
+        "type": "String"
+      }
+    }
+  },
+  "shopDeletedSuccessfully": "تم حذف المتجر بنجاح",
+  "shopActivated": "تم تفعيل المتجر",
+  "shopDeactivated": "تم إلغاء تفعيل المتجر",
+  "errorUpdatingShop": "خطأ في تحديث المتجر: {error}",
+  "@errorUpdatingShop": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeletingShop": "خطأ في حذف المتجر: {error}",
+  "@errorDeletingShop": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorLoadingShops": "خطأ في تحميل المتاجر",
+  "couldNotLaunchPhoneDialer": "تعذر تشغيل برنامج الاتصال",
+  "errorLaunchingDialer": "خطأ في تشغيل برنامج الاتصال: {error}",
+  "@errorLaunchingDialer": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "supportLocalEntrepreneurs": "ادعم رواد الأعمال المحليين",
+  "helpSmallBusinessesThrive": "ساعد الأعمال الصغيرة على الازدهار في مجتمعك",
+  "loadingBusinesses": "جاري تحميل الأعمال...",
+  "errorLoadingBusinesses": "خطأ في تحميل الأعمال",
+  "noSmallBusinessesAvailable": "لا توجد أعمال صغيرة متاحة",
+  "checkBackLaterForEntrepreneurs": "تحقق لاحقًا من رواد الأعمال المحليين!",
+  "smallBusinessesUpdated": "تم تحديث الأعمال الصغيرة",
+  "removedFromWishlist": "تمت الإزالة من قائمة الأمنيات",
+  "addedToWishlist": "تمت الإضافة إلى قائمة الأمنيات",
+  "handmade": "الأعمال اليدوية",
+  "artAndCrafts": "الفن والحرف",
+  "foodAndBeverage": "الطعام والمشروبات",
+  "services": "الخدمات",
+  "technology": "التكنولوجيا",
+  "consulting": "الاستشارات",
+  "retail": "التجارة بالتجزئة",
+  "fitnessAndWellness": "اللياقة والعافية",
+  "education": "التعليم",
+  "other": "أخرى",
+  "business": "عمل",
+  "heart": "قلب",
+  "handshake": "مصافحة",
+  "support": "دعم",
+  "offer": "عرض",
+  "volunteer": "تطوع",
+  "group": "مجموعة",
+  "store": "متجر",
+  "errorLoadingSettings": "خطأ في تحميل الإعدادات: {error}",
+  "@errorLoadingSettings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSavingSettings": "خطأ في حفظ الإعدادات: {error}",
+  "@errorSavingSettings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingFeatureSettings": "جاري تحميل إعدادات الميزة...",
+  "failedToUploadImages": "فشل تحميل الصور",
+  "errorAddingShop": "خطأ في إضافة المتجر: {error}",
+  "@errorAddingShop": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nearbyShops": "المتاجر القريبة",
+  "myWishlist": "قائمة أمنياتي",
+  "petAdoption": "تبني الحيوانات الأليفة"
+}
