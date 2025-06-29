@@ -15,6 +15,7 @@ import 'package:bubbles_ecommerce_app/pet_adoption_screen.dart';
 import 'package:bubbles_ecommerce_app/locale_provider.dart';
 import 'package:bubbles_ecommerce_app/generated/app_localizations.dart';
 import 'package:bubbles_ecommerce_app/home_screen.dart';
+import 'package:bubbles_ecommerce_app/customer_reorder_screen.dart';
 import 'package:bubbles_ecommerce_app/wishlist_screen.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -174,7 +175,7 @@ class _AppDrawerState extends State<AppDrawer> {
             },
           ),
 
-          // ORDERS
+          // MY ORDERS
           ListTile(
             leading: const Icon(Icons.receipt_long, color: Colors.blueAccent),
             title: Text(appLocalizations.myOrdersTitle),
@@ -182,6 +183,19 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.pop(context);
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const MyOrdersScreen()),
+              );
+            },
+          ),
+
+          // SMART REORDER - Fixed with proper title and icon
+          ListTile(
+            leading: const Icon(Icons.auto_awesome, color: Colors.deepPurple),
+            title: const Text('Smart Reorder'), // You may want to add this to your localizations
+            subtitle: const Text('AI-powered suggestions'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const CustomerReorderScreen()),
               );
             },
           ),

@@ -276,6 +276,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             },
           ),
         ],
+
       ),
       drawer: AppDrawer(userEmail: widget.userEmail),
       body: FadeTransition(

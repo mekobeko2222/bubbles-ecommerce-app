@@ -10,6 +10,9 @@ import 'package:bubbles_ecommerce_app/generated/app_localizations.dart';
 import 'package:bubbles_ecommerce_app/order_confirmation_screen.dart';
 import 'package:bubbles_ecommerce_app/config/app_config.dart'; // Import the new config
 
+// Import notification service
+import 'package:bubbles_ecommerce_app/services/api_notification_service.dart';
+
 // Import checkout widgets
 import 'package:bubbles_ecommerce_app/screens/checkout_widgets/order_summary_card.dart';
 import 'package:bubbles_ecommerce_app/screens/checkout_widgets/offer_code_section.dart';
@@ -566,6 +569,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> with TickerProviderStat
         'appliedDiscountPercentage': basket.discountPercentage,
         'paymentMethod': _selectedPaymentMethod!.name,
       });
+
+      // 🎯 NOTIFICATION CODE - RIGHT AFTER ORDER IS SAVED! 🎯
+      try {
+        debugPrint('🔔 Sending order notifications for order: ${orderRef.id}');
+
+        // Create the order data in the exact format the API expects
+        final orderDataForNotification = {
+          'totalPrice': basket.grandTotal,
+          'userEmail': userEmail ?? 'Unknown',
+          'items': finalOrderedItems,
+          'orderStatus': 'Pending',
+          'userId': userId,
+          'subtotalPrice': basket.subtotal,
+          'shippingFee': basket.shippingFee,
+          'discountedSubtotalPrice': basket.discountedSubtotal,
+          'orderDate': DateTime.now().toIso8601String(),
+          'shippingAddress': {
+            'area': _selectedArea,
+            'buildingNumber': _buildingNumberController.text.trim(),
+            'floorNumber': _floorNumberController.text.trim(),
+            'apartmentNumber': _apartmentNumberController.text.trim(),
+            'phoneNumber': _phoneNumberController.text.trim(),
+            'paymentMethod': _selectedPaymentMethod!.name,
+          },
+          'paymentMethod': _selectedPaymentMethod!.name,
+        };
+
+        // Use the direct method that sends the exact order data format
+        await ApiNotificationService.notifyNewOrderDirect(
+          orderId: orderRef.id,
+          orderData: orderDataForNotification,
+        );
+
+        debugPrint('✅ Order notifications sent successfully');
+      } catch (notificationError) {
+        // Don't fail the order if notifications fail
+        debugPrint('❌ Failed to send order notifications: $notificationError');
+        // Optionally show a warning to the user, but don't break the order flow
+      }
 
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'defaultAddress': {

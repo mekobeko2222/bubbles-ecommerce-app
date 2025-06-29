@@ -11,22 +11,24 @@ plugins {
 android {
     // Defines the package name for your Android application.
     namespace = "com.example.bubbles_ecommerce_app" // Make sure this matches your Firebase project setup
-    // Specifies the Android API level against which your app will be compiled.
-    compileSdk = flutter.compileSdkVersion
+    // FIXED: Lower compileSdk to avoid flutter_local_notifications issues
+    compileSdk = 35
     // Specifies the NDK (Native Development Kit) version to use for native code compilation.
-    // THIS IS THE LINE TO FIX THE NDK VERSION MISMATCH ERROR.
+    // THIS IS THE LINE TO FIX the NDK VERSION MISMATCH ERROR.
     // Set it to the specific version required by the plugins.
     ndkVersion = "27.0.12077973" // <--- UPDATED: Hardcoded NDK version as per plugin requirement
 
     compileOptions {
-        // Sets the Java source and target compatibility to Java 11.
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        // REMOVED: Core library desugaring temporarily to fix compilation
+        // isCoreLibraryDesugaringEnabled = true
+        // FIXED: Use Java 8 for compatibility with flutter_local_notifications
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        // Sets the JVM target version for Kotlin compilation to Java 11.
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        // FIXED: Use Java 8 for Kotlin compilation
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     defaultConfig {
@@ -34,14 +36,15 @@ android {
         // This MUST match the package name you entered in Firebase Console.
         applicationId = "com.example.bubbles_ecommerce_app"
         // The minimum Android API level required to run your app.
-        // UPDATED: Increased to 33 for FCM and notification support
-        minSdk = 33
-        // The Android API level your app is designed to run on, for compatibility behaviors.
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 23
+        // FIXED: Lower targetSdk to avoid compilation issues
+        targetSdk = 33
         // An integer value that represents the version of the application code.
         versionCode = flutter.versionCode
         // A string value that represents the user-friendly version name.
         versionName = flutter.versionName
+        // Enable multidex support
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -77,4 +80,7 @@ dependencies {
 
     // Kotlin standard library for Android
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    // TEMPORARILY REMOVED: Core library desugaring
+    // coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 }

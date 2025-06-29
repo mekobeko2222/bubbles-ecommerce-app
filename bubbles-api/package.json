@@ -2,7 +2,7 @@
   "name": "bubbles-notification-api",
   "version": "1.0.0",
   "description": "Notification API for Bubbles E-commerce",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "vercel dev",
     "deploy": "vercel --prod"

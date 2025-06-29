@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../main.dart'; // Import to access navigatorKey
 import 'package:firebase_auth/firebase_auth.dart';
 
 /// Global function to handle background messages
@@ -22,7 +23,6 @@ class NotificationService {
   NotificationService._internal();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -36,10 +36,10 @@ class NotificationService {
     try {
       debugPrint('🔔 Initializing NotificationService...');
 
-      // Initialize local notifications
-      await _initializeLocalNotifications();
+      // Initialize awesome notifications
+      await _initializeAwesomeNotifications();
 
-      // Initialize Firebase Messaging
+      // Initialize Firebase Messaging (optional, for future use)
       await _initializeFirebaseMessaging();
 
       // Request permission
@@ -51,80 +51,56 @@ class NotificationService {
     }
   }
 
-  /// Initialize local notifications
-  Future<void> _initializeLocalNotifications() async {
-    // Android initialization settings
-    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    // iOS initialization settings
-    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+  /// Initialize awesome notifications
+  Future<void> _initializeAwesomeNotifications() async {
+    await AwesomeNotifications().initialize(
+      null, // Use default app icon
+      [
+        // Order notifications channel
+        NotificationChannel(
+          channelKey: _orderChannelId,
+          channelName: 'Order Notifications',
+          channelDescription: 'Notifications for order updates and confirmations',
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.white,
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+          playSound: true,
+          enableVibration: true,
+        ),
+        // General notifications channel
+        NotificationChannel(
+          channelKey: _generalChannelId,
+          channelName: 'General Notifications',
+          channelDescription: 'General app notifications and updates',
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.white,
+          importance: NotificationImportance.Default,
+          channelShowBadge: true,
+        ),
+        // Admin notifications channel (high priority)
+        NotificationChannel(
+          channelKey: _adminChannelId,
+          channelName: 'Admin Notifications',
+          channelDescription: 'Important admin notifications for new orders and updates',
+          defaultColor: Colors.red,
+          ledColor: Colors.red,
+          importance: NotificationImportance.Max,
+          channelShowBadge: true,
+          playSound: true,
+          enableVibration: true,
+          enableLights: true,
+        ),
+      ],
     );
 
-    // Combined initialization settings
-    const InitializationSettings initSettings = InitializationSettings(
-      android: androidSettings,
-      iOS: iosSettings,
+    // Set up notification action stream
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: _onNotificationTapped,
+      onNotificationCreatedMethod: _onNotificationCreated,
+      onNotificationDisplayedMethod: _onNotificationDisplayed,
+      onDismissActionReceivedMethod: _onDismissActionReceived,
     );
-
-    // Initialize with callback for when notification is tapped
-    await _localNotificationsPlugin.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: _onNotificationTapped,
-    );
-
-    // Create notification channels for Android
-    await _createNotificationChannels();
-  }
-
-  /// Create notification channels for Android
-  Future<void> _createNotificationChannels() async {
-    // Order notifications channel
-    const AndroidNotificationChannel orderChannel = AndroidNotificationChannel(
-      _orderChannelId,
-      'Order Notifications',
-      description: 'Notifications for order updates and confirmations',
-      importance: Importance.high,
-      showBadge: true,
-      playSound: true,
-      enableVibration: true,
-    );
-
-    // General notifications channel
-    const AndroidNotificationChannel generalChannel = AndroidNotificationChannel(
-      _generalChannelId,
-      'General Notifications',
-      description: 'General app notifications and updates',
-      importance: Importance.defaultImportance,
-      showBadge: true,
-    );
-
-    // Admin notifications channel (high priority)
-    const AndroidNotificationChannel adminChannel = AndroidNotificationChannel(
-      _adminChannelId,
-      'Admin Notifications',
-      description: 'Important admin notifications for new orders and updates',
-      importance: Importance.max,
-      showBadge: true,
-      playSound: true,
-      enableVibration: true,
-      enableLights: true,
-    );
-
-    // Create the channels
-    await _localNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(orderChannel);
-
-    await _localNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(generalChannel);
-
-    await _localNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(adminChannel);
   }
 
   /// Initialize Firebase Messaging
@@ -143,6 +119,10 @@ class NotificationService {
     if (initialMessage != null) {
       _handleNotificationTap(initialMessage);
     }
+
+    // Add debug logging for FCM token
+    final String? token = await _firebaseMessaging.getToken();
+    debugPrint('🔑 Current FCM Token: ${token?.substring(0, 50)}...');
   }
 
   /// Handle foreground messages
@@ -155,114 +135,144 @@ class NotificationService {
     await _showLocalNotification(message);
   }
 
-  /// Show local notification
+  /// Show local notification using AwesomeNotifications
   Future<void> _showLocalNotification(RemoteMessage message) async {
-    final RemoteNotification? notification = message.notification;
-    if (notification == null) return;
+    try {
+      final RemoteNotification? notification = message.notification;
 
-    // Determine channel based on message data
-    String channelId = _generalChannelId;
-    if (message.data['type'] == 'order') {
-      channelId = _orderChannelId;
-    } else if (message.data['type'] == 'admin') {
-      channelId = _adminChannelId;
-    }
+      // If no notification payload, create one from data
+      String title = notification?.title ?? 'New Notification';
+      String body = notification?.body ?? 'You have a new notification';
 
-    // Android notification details
-    AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      channelId,
-      channelId == _orderChannelId ? 'Order Notifications' :
-      channelId == _adminChannelId ? 'Admin Notifications' : 'General Notifications',
-      channelDescription: channelId == _orderChannelId ? 'Order updates and confirmations' :
-      channelId == _adminChannelId ? 'Admin notifications for new orders' : 'General app notifications',
-      importance: channelId == _adminChannelId ? Importance.max : Importance.high,
-      priority: channelId == _adminChannelId ? Priority.max : Priority.high,
-      showWhen: true,
-      icon: '@mipmap/ic_launcher',
-      largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
-      styleInformation: BigTextStyleInformation(
-        notification.body ?? '',
-        contentTitle: notification.title,
-        summaryText: 'Bubbles E-commerce',
-      ),
-    );
-
-    // iOS notification details
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    NotificationDetails notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    // Show the notification
-    await _localNotificationsPlugin.show(
-      message.hashCode,
-      notification.title,
-      notification.body,
-      notificationDetails,
-      payload: jsonEncode(message.data),
-    );
-  }
-
-  /// Handle notification tap
-  void _handleNotificationTap(RemoteMessage message) {
-    debugPrint('🔔 Notification tapped: ${message.data}');
-
-    // Navigate based on notification type
-    final String? type = message.data['type'];
-    final String? orderId = message.data['orderId'];
-
-    if (type == 'order' && orderId != null) {
-      // Navigate to order details or orders list
-      _navigateToOrders();
-    } else if (type == 'admin') {
-      // Navigate to admin panel
-      _navigateToAdminPanel();
-    }
-  }
-
-  /// Handle local notification tap
-  void _onNotificationTapped(NotificationResponse notificationResponse) {
-    debugPrint('🔔 Local notification tapped: ${notificationResponse.payload}');
-
-    if (notificationResponse.payload != null) {
-      try {
-        final Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
-
-        final String? type = data['type'];
-        final String? orderId = data['orderId'];
-
-        if (type == 'order' && orderId != null) {
-          _navigateToOrders();
-        } else if (type == 'admin') {
-          _navigateToAdminPanel();
-        }
-      } catch (e) {
-        debugPrint('Error parsing notification payload: $e');
+      // Handle cases where title/body might be in data
+      if (message.data.containsKey('title')) {
+        title = message.data['title'] ?? title;
       }
+      if (message.data.containsKey('body')) {
+        body = message.data['body'] ?? body;
+      }
+
+      debugPrint('📱 Showing local notification: $title - $body');
+
+      // Determine channel based on message data
+      String channelId = _generalChannelId;
+      if (message.data['type'] == 'order' || message.data['action'] == 'new_order') {
+        channelId = _orderChannelId;
+      } else if (message.data['type'] == 'admin') {
+        channelId = _adminChannelId;
+      }
+
+      // Show the notification
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: DateTime.now().millisecondsSinceEpoch ~/ 1000, // Unique ID
+          channelKey: channelId,
+          title: title,
+          body: body,
+          bigPicture: null,
+          largeIcon: null,
+          notificationLayout: NotificationLayout.BigText,
+          payload: message.data.map((key, value) => MapEntry(key, value?.toString())),
+          category: channelId == _orderChannelId ? NotificationCategory.Status :
+          channelId == _adminChannelId ? NotificationCategory.Message :
+          NotificationCategory.Social,
+          wakeUpScreen: true,
+          criticalAlert: channelId == _adminChannelId, // Critical for admin notifications
+        ),
+      );
+
+      debugPrint('✅ Local notification created successfully');
+    } catch (e) {
+      debugPrint('❌ Error creating local notification: $e');
+    }
+  }
+
+  /// Handle notification tap from Firebase
+  void _handleNotificationTap(RemoteMessage message) {
+    debugPrint('🔔 Firebase notification tapped: ${message.data}');
+    _processNotificationAction(message.data.map((key, value) => MapEntry(key, value?.toString())));
+  }
+
+  /// Handle awesome notification events
+  @pragma("vm:entry-point")
+  static Future<void> _onNotificationTapped(ReceivedAction receivedAction) async {
+    debugPrint('🔔 Awesome notification tapped: ${receivedAction.payload}');
+    final instance = NotificationService();
+    instance._processNotificationAction(receivedAction.payload ?? {});
+  }
+
+  @pragma("vm:entry-point")
+  static Future<void> _onNotificationCreated(ReceivedNotification receivedNotification) async {
+    debugPrint('🔔 Notification created: ${receivedNotification.id}');
+  }
+
+  @pragma("vm:entry-point")
+  static Future<void> _onNotificationDisplayed(ReceivedNotification receivedNotification) async {
+    debugPrint('🔔 Notification displayed: ${receivedNotification.id}');
+  }
+
+  @pragma("vm:entry-point")
+  static Future<void> _onDismissActionReceived(ReceivedAction receivedAction) async {
+    debugPrint('🔔 Notification dismissed: ${receivedAction.id}');
+  }
+
+  /// Process notification action
+  void _processNotificationAction(Map<String, String?> data) {
+    final String? type = data['type'];
+    final String? action = data['action'];
+
+    debugPrint('🔔 Processing notification action: type=$type, action=$action');
+
+    if (type == 'admin' && action == 'new_order') {
+      // Navigate to admin orders screen
+      _navigateToAdminOrders();
+    } else {
+      // Fallback: just bring app to foreground
+      debugPrint('🚀 Bringing app to foreground');
+    }
+  }
+
+  /// Navigate to admin orders screen
+  void _navigateToAdminOrders() {
+    try {
+      debugPrint('🚀 Navigating to admin orders screen...');
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        // Navigate to admin panel with orders tab selected
+        Navigator.of(context).pushNamed('/admin-orders');
+      } else {
+        debugPrint('⚠️ No context available for navigation');
+      }
+    } catch (e) {
+      debugPrint('❌ Error navigating to admin orders: $e');
     }
   }
 
   /// Navigate to orders screen (placeholder - implement with your navigation)
   void _navigateToOrders() {
-    // TODO: Implement navigation to orders screen
+    // Not needed for admin notifications
     debugPrint('🚀 Navigating to orders...');
   }
 
   /// Navigate to admin panel (placeholder - implement with your navigation)
   void _navigateToAdminPanel() {
-    // TODO: Implement navigation to admin panel
-    debugPrint('🚀 Navigating to admin panel...');
+    try {
+      debugPrint('🚀 Navigating to admin panel...');
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        Navigator.of(context).pushNamed('/admin');
+      } else {
+        debugPrint('⚠️ No context available for navigation');
+      }
+    } catch (e) {
+      debugPrint('❌ Error navigating to admin panel: $e');
+    }
   }
 
   /// Request notification permission
   Future<bool> requestPermission() async {
     try {
+      // Request Firebase permission
       final NotificationSettings settings = await _firebaseMessaging.requestPermission(
         alert: true,
         announcement: false,
@@ -273,7 +283,14 @@ class NotificationService {
         sound: true,
       );
 
-      debugPrint('🔔 Notification permission status: ${settings.authorizationStatus}');
+      // Request AwesomeNotifications permission
+      final bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+      if (!isAllowed) {
+        await AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+
+      debugPrint('🔔 Firebase permission status: ${settings.authorizationStatus}');
+      debugPrint('🔔 AwesomeNotifications allowed: ${await AwesomeNotifications().isNotificationAllowed()}');
 
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         debugPrint('✅ Notification permission granted');
@@ -440,7 +457,36 @@ class NotificationService {
   /// Check if notifications are enabled
   Future<bool> areNotificationsEnabled() async {
     final settings = await getNotificationSettings();
-    return settings.authorizationStatus == AuthorizationStatus.authorized ||
-        settings.authorizationStatus == AuthorizationStatus.provisional;
+    final awesomeAllowed = await AwesomeNotifications().isNotificationAllowed();
+
+    return (settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional) &&
+        awesomeAllowed;
+  }
+
+  /// Force show a test admin notification (for debugging)
+  Future<void> forceShowAdminNotification() async {
+    debugPrint('🔔 Force showing admin notification...');
+    try {
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          channelKey: _adminChannelId,
+          title: '🛒 New Order!',
+          body: 'You have received a new order. Check your admin panel for details.',
+          wakeUpScreen: true,
+          criticalAlert: true,
+          category: NotificationCategory.Message,
+          payload: {
+            'type': 'admin',
+            'action': 'new_order',
+            'source': 'force_test'
+          },
+        ),
+      );
+      debugPrint('✅ Force admin notification created');
+    } catch (e) {
+      debugPrint('❌ Error creating force admin notification: $e');
+    }
   }
 }

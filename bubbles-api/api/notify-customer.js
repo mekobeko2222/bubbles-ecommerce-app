@@ -35,10 +35,15 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({
+      success: false,
+      error: 'Method not allowed. Use POST.'
+    });
   }
 
   try {
+    console.log('📱 Customer notification request received:', req.body);
+
     const { title, body, data, userId } = req.body;
 
     if (!title || !body) {
@@ -55,6 +60,12 @@ export default async function handler(req, res) {
     }
 
     console.log('📱 Processing customer notification:', { title, body, data, userId });
+
+    const notificationData = {
+      ...data,
+      timestamp: new Date().toISOString(),
+      type: 'customer'
+    };
 
     let response;
 
@@ -81,11 +92,7 @@ export default async function handler(req, res) {
 
       const message = {
         notification: { title, body },
-        data: {
-          ...data,
-          timestamp: new Date().toISOString(),
-          type: 'customer'
-        },
+        data: notificationData,
         token: userToken,
         android: {
           notification: {
@@ -112,11 +119,7 @@ export default async function handler(req, res) {
       // Send to all customers via topic
       const message = {
         notification: { title, body },
-        data: {
-          ...data,
-          timestamp: new Date().toISOString(),
-          type: 'customer'
-        },
+        data: notificationData,
         topic: 'customers',
         android: {
           notification: {

@@ -39,117 +39,122 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { orderId, userId, newStatus, oldStatus } = req.body;
+    const { title, body, data, userId } = req.body;
 
-    console.log(`📦 Processing status update notification: ${orderId} - ${oldStatus} → ${newStatus}`);
-
-    // Only send notification for specific status changes
-    if (!['Shipped', 'Delivered', 'Cancelled'].includes(newStatus)) {
-      return res.status(200).json({ 
-        success: true, 
-        message: `No notification needed for status: ${newStatus}` 
-      });
-    }
-
-    // Get user's FCM token
-    const userDoc = await db.collection('users').doc(userId).get();
-
-    if (!userDoc.exists) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'User not found' 
-      });
-    }
-
-    const userData = userDoc.data();
-    const userToken = userData.fcmToken;
-
-    if (!userToken) {
-      return res.status(200).json({ 
-        success: true, 
-        message: 'User does not have FCM token' 
-      });
-    }
-
-    // Prepare notification based on status
-    let notification = {};
-    const orderIdShort = orderId.substring(0, 8).toUpperCase();
-
-    switch (newStatus.toLowerCase()) {
-      case 'shipped':
-        notification = {
-          title: '🚚 Order Shipped',
-          body: `Your order #${orderIdShort} has been shipped and is on its way!`
-        };
-        break;
-      case 'delivered':
-        notification = {
-          title: '✅ Order Delivered',
-          body: `Your order #${orderIdShort} has been delivered successfully!`
-        };
-        break;
-      case 'cancelled':
-        notification = {
-          title: '❌ Order Cancelled',
-          body: `Your order #${orderIdShort} has been cancelled.`
-        };
-        break;
-      default:
-        return res.status(200).json({ 
-          success: true, 
-          message: 'No notification needed for this status' 
-        });
-    }
-
-    const data = {
-      type: 'order',
-      action: 'view_order',
-      orderId: orderId,
-      newStatus: newStatus
-    };
-
-    // Send notification to customer
-    const message = {
-      notification: notification,
-      data: data,
-      token: userToken,
-      android: {
-        notification: {
-          channelId: 'order_notifications',
-          priority: 'high',
-          sound: 'default',
-          icon: 'ic_launcher'
+    if (!title || !body) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields: title and body',
+        example: {
+          title: 'Order Confirmed',
+          body: 'Your order #12345 has been confirmed!',
+          data: { orderId: '12345', type: 'order_confirmation' },
+          userId: 'optional-user-id'
         }
-      },
-      apns: {
-        payload: {
-          aps: {
-            alert: {
-              title: notification.title,
-              body: notification.body
-            },
-            badge: 1,
+      });
+    }
+
+    console.log('📱 Processing customer notification:', { title, body, data, userId });
+
+    let response;
+
+    if (userId) {
+      // Send to specific user
+      const userDoc = await db.collection('users').doc(userId).get();
+
+      if (!userDoc.exists) {
+        return res.status(404).json({
+          success: false,
+          error: 'User not found'
+        });
+      }
+
+      const userData = userDoc.data();
+      const userToken = userData.fcmToken;
+
+      if (!userToken) {
+        return res.status(400).json({
+          success: false,
+          error: 'User has no FCM token'
+        });
+      }
+
+      const message = {
+        notification: { title, body },
+        data: {
+          ...data,
+          timestamp: new Date().toISOString(),
+          type: 'customer'
+        },
+        token: userToken,
+        android: {
+          notification: {
+            channelId: 'order_notifications',
+            priority: 'high',
             sound: 'default'
           }
+        },
+        apns: {
+          payload: {
+            aps: {
+              alert: { title, body },
+              badge: 1,
+              sound: 'default'
+            }
+          }
         }
-      }
-    };
+      };
 
-    const response = await messaging.send(message);
-    console.log(`✅ Customer notification sent: ${response}`);
+      response = await messaging.send(message);
+      console.log('✅ Customer notification sent to specific user:', response);
+
+    } else {
+      // Send to all customers via topic
+      const message = {
+        notification: { title, body },
+        data: {
+          ...data,
+          timestamp: new Date().toISOString(),
+          type: 'customer'
+        },
+        topic: 'customers',
+        android: {
+          notification: {
+            channelId: 'general_notifications',
+            priority: 'default',
+            sound: 'default'
+          }
+        },
+        apns: {
+          payload: {
+            aps: {
+              alert: { title, body },
+              badge: 1,
+              sound: 'default'
+            }
+          }
+        }
+      };
+
+      response = await messaging.send(message);
+      console.log('✅ Customer notification sent to topic:', response);
+    }
 
     return res.status(200).json({
       success: true,
+      messageId: response,
       message: 'Customer notification sent successfully',
-      messageId: response
+      sentTo: userId ? 'specific_user' : 'all_customers',
+      timestamp: new Date().toISOString()
     });
 
   } catch (error) {
     console.error('❌ Error sending customer notification:', error);
     return res.status(500).json({
       success: false,
-      error: 'Failed to send notification',
-      details: error.message
+      error: 'Failed to send customer notification',
+      details: error.message,
+      timestamp: new Date().toISOString()
     });
   }
 }

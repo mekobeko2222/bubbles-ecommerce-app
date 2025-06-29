@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'notification_service.dart';
 
 class AdminNotificationService {
@@ -17,8 +18,8 @@ class AdminNotificationService {
     try {
       debugPrint('🔔 Initializing AdminNotificationService...');
 
-      // Check if current user is admin and save token if needed
-      await _checkAndSaveAdminToken();
+      // Note: We're using local notifications only, no FCM tokens needed
+      debugPrint('📱 Using local notifications (no Firebase FCM)');
 
       debugPrint('✅ AdminNotificationService initialized successfully');
     } catch (e) {
@@ -44,25 +45,94 @@ class AdminNotificationService {
     }
   }
 
-  /// Setup listener for new orders (triggers Cloud Function)
+  /// Setup listener for new orders (triggers notifications)
   void setupOrderListener() {
     debugPrint('🔔 Setting up order listener for admin notifications...');
 
+    // Only listen for orders created AFTER the app starts (to avoid old orders)
+    final DateTime appStartTime = DateTime.now();
+    debugPrint('📅 App start time: $appStartTime - Only orders after this will trigger notifications');
+
     // Listen to orders collection for new documents
-    _firestore.collection('orders').snapshots().listen((QuerySnapshot snapshot) {
+    _firestore
+        .collection('orders')
+        .where('orderDate', isGreaterThan: Timestamp.fromDate(appStartTime))
+        .snapshots()
+        .listen((QuerySnapshot snapshot) {
       for (DocumentChange change in snapshot.docChanges) {
         if (change.type == DocumentChangeType.added) {
           final orderData = change.doc.data() as Map<String, dynamic>;
-          debugPrint('📦 New order detected: ${change.doc.id}');
-          debugPrint('📦 Order data: $orderData');
+          final orderDate = (orderData['orderDate'] as Timestamp?)?.toDate();
 
-          // The Cloud Function will handle sending notifications to admins
-          // We just log here for debugging
+          debugPrint('📦 New order detected: ${change.doc.id}');
+          debugPrint('📅 Order date: $orderDate');
+
+          // Double-check that this order was created after app start
+          if (orderDate != null && orderDate.isAfter(appStartTime)) {
+            debugPrint('✅ Order is truly new, showing notification');
+
+            // Show LOCAL notification immediately (no FCM needed!)
+            try {
+              _showLocalAdminNotification(change.doc.id);
+            } catch (e) {
+              debugPrint('❌ Error showing local notification: $e');
+            }
+
+            // Optional: Still send via Vercel API for logging/webhooks
+            try {
+              handleNewOrderNotification(change.doc.id, orderData);
+            } catch (e) {
+              debugPrint('❌ Error sending API notification: $e');
+            }
+          } else {
+            debugPrint('⏳ Order is from before app start, skipping notification');
+          }
         }
       }
     }, onError: (error) {
       debugPrint('❌ Error listening to orders: $error');
     });
+  }
+
+  /// Show local admin notification using AwesomeNotifications
+  Future<void> _showLocalAdminNotification(String orderId) async {
+    try {
+      debugPrint('🔔 Showing LOCAL admin notification for order: $orderId');
+
+      // Check if user is admin first
+      final User? user = _auth.currentUser;
+      if (user == null) return;
+
+      final userDoc = await _firestore.collection('users').doc(user.uid).get();
+      final bool isAdmin = userDoc.data()?['isAdmin'] ?? false;
+
+      if (!isAdmin) {
+        debugPrint('⚠️ User is not admin, skipping notification');
+        return;
+      }
+
+      // Create notification using AwesomeNotifications
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          channelKey: 'admin_notifications',
+          title: '🛒 New Order!',
+          body: 'You have received a new order. Check your admin panel for details.',
+          wakeUpScreen: true,
+          criticalAlert: true,
+          category: NotificationCategory.Message,
+          payload: {
+            'type': 'admin',
+            'action': 'new_order',
+            'orderId': orderId,
+          },
+        ),
+      );
+
+      debugPrint('✅ LOCAL admin notification created successfully');
+    } catch (e) {
+      debugPrint('❌ Error creating local admin notification: $e');
+    }
   }
 
   /// Get all admin tokens (for testing purposes)
@@ -364,16 +434,8 @@ class AdminNotificationService {
         return;
       }
 
-      // Send test notification
-      await notifySpecificAdmin(
-        user.uid,
-        '🧪 Test Notification',
-        'This is a test notification to verify the system is working correctly.',
-        {
-          'type': 'test',
-          'timestamp': DateTime.now().toIso8601String(),
-        },
-      );
+      // Show test local notification
+      await _showLocalAdminNotification('TEST_ORDER_ID');
 
       debugPrint('✅ Test notification sent successfully');
     } catch (e) {

@@ -469,165 +469,6 @@ exports.sendManualNotification = functions.https.onCall(async (data, context) =>
 });
 
 /**
- * Helper function to send individual notification
- * @param {Object} payload - The notification payload
- * @return {Promise} Response from FCM
- */
-async function sendIndividualNotification(payload) {
-    const {token, title, body, data} = payload;
-
-    const message = {
-        notification: {
-            title: title,
-            body: body,
-        },
-        data: data,
-        token: token,
-        android: {
-            notification: {
-                channelId: data.type === "admin" ? "admin_notifications" : "order_notifications",
-                priority: "high",
-                sound: "default",
-                icon: "ic_launcher",
-            },
-        },
-        apns: {
-            payload: {
-                aps: {
-                    alert: {
-                        title: title,
-                        body: body,
-                    },
-                    badge: 1,
-                    sound: "default",
-                },
-            },
-        },
-    };
-
-    const response = await messaging.send(message);
-    console.log(`✅ Individual notification sent: ${response}`);
-    return response;
-}
-
-/**
- * Helper function to broadcast to all admins
- * @param {Object} payload - The notification payload
- * @return {Promise} Response from FCM
- */
-async function broadcastToAllAdmins(payload) {
-    const {title, body, data} = payload;
-
-    // Get all active admin tokens
-    const adminTokensSnapshot = await db.collection("admin_tokens")
-        .where("isActive", "==", true)
-        .get();
-
-    if (adminTokensSnapshot.empty) {
-        console.log("⚠️ No active admin tokens found for broadcast");
-        return;
-    }
-
-    const adminTokens = [];
-    adminTokensSnapshot.forEach((doc) => {
-        const tokenData = doc.data();
-        if (tokenData.token) {
-            adminTokens.push(tokenData.token);
-        }
-    });
-
-    if (adminTokens.length === 0) {
-        console.log("⚠️ No valid admin tokens for broadcast");
-        return;
-    }
-
-    const message = {
-        notification: {
-            title: title,
-            body: body,
-        },
-        data: data,
-        tokens: adminTokens,
-        android: {
-            notification: {
-                channelId: "admin_notifications",
-                priority: "high",
-                sound: "default",
-                icon: "ic_launcher",
-            },
-        },
-        apns: {
-            payload: {
-                aps: {
-                    alert: {
-                        title: title,
-                        body: body,
-                    },
-                    badge: 1,
-                    sound: "default",
-                },
-            },
-        },
-    };
-
-    const response = await messaging.sendMulticast(message);
-    console.log(`✅ Broadcast sent: ${response.successCount} successful, ` +
-               `${response.failureCount} failed`);
-
-    // Clean up invalid tokens
-    const invalidTokens = [];
-    response.responses.forEach((resp, idx) => {
-        if (!resp.success && resp.error &&
-            resp.error.code === "messaging/registration-token-not-registered") {
-            invalidTokens.push(adminTokens[idx]);
-        }
-    });
-
-    if (invalidTokens.length > 0) {
-        await cleanupInvalidTokens(invalidTokens);
-    }
-
-    return response;
-}
-
-/**
- * Helper function to clean up invalid tokens
- * @param {Array} invalidTokens - Array of invalid FCM tokens
- * @return {Promise} Batch commit result
- */
-async function cleanupInvalidTokens(invalidTokens) {
-    console.log(`🗑️ Cleaning up ${invalidTokens.length} invalid tokens`);
-
-    const batch = db.batch();
-
-    for (const token of invalidTokens) {
-        // Find and delete documents with invalid tokens
-        const adminTokenQuery = await db.collection("admin_tokens")
-            .where("token", "==", token)
-            .get();
-
-        adminTokenQuery.forEach((doc) => {
-            batch.delete(doc.ref);
-        });
-
-        // Also clean up from users collection
-        const userQuery = await db.collection("users")
-            .where("fcmToken", "==", token)
-            .get();
-
-        userQuery.forEach((doc) => {
-            batch.update(doc.ref, {
-                fcmToken: admin.firestore.FieldValue.delete(),
-                tokenUpdatedAt: admin.firestore.FieldValue.delete(),
-            });
-        });
-    }
-
-    await batch.commit();
-    console.log(`✅ Cleaned up ${invalidTokens.length} invalid tokens`);
-}
-
-/**
  * Scheduled function to clean up old notification queue items
  * Runs daily at midnight
  */
@@ -795,3 +636,162 @@ exports.getNotificationStats = functions.https.onCall(async (data, context) => {
             "Error getting notification statistics: " + error.message);
     }
 });
+
+/**
+ * Helper function to send individual notification
+ * @param {Object} payload - The notification payload
+ * @return {Promise} Response from FCM
+ */
+async function sendIndividualNotification(payload) {
+    const {token, title, body, data} = payload;
+
+    const message = {
+        notification: {
+            title: title,
+            body: body,
+        },
+        data: data,
+        token: token,
+        android: {
+            notification: {
+                channelId: data.type === "admin" ? "admin_notifications" : "order_notifications",
+                priority: "high",
+                sound: "default",
+                icon: "ic_launcher",
+            },
+        },
+        apns: {
+            payload: {
+                aps: {
+                    alert: {
+                        title: title,
+                        body: body,
+                    },
+                    badge: 1,
+                    sound: "default",
+                },
+            },
+        },
+    };
+
+    const response = await messaging.send(message);
+    console.log(`✅ Individual notification sent: ${response}`);
+    return response;
+}
+
+/**
+ * Helper function to broadcast to all admins
+ * @param {Object} payload - The notification payload
+ * @return {Promise} Response from FCM
+ */
+async function broadcastToAllAdmins(payload) {
+    const {title, body, data} = payload;
+
+    // Get all active admin tokens
+    const adminTokensSnapshot = await db.collection("admin_tokens")
+        .where("isActive", "==", true)
+        .get();
+
+    if (adminTokensSnapshot.empty) {
+        console.log("⚠️ No active admin tokens found for broadcast");
+        return;
+    }
+
+    const adminTokens = [];
+    adminTokensSnapshot.forEach((doc) => {
+        const tokenData = doc.data();
+        if (tokenData.token) {
+            adminTokens.push(tokenData.token);
+        }
+    });
+
+    if (adminTokens.length === 0) {
+        console.log("⚠️ No valid admin tokens for broadcast");
+        return;
+    }
+
+    const message = {
+        notification: {
+            title: title,
+            body: body,
+        },
+        data: data,
+        tokens: adminTokens,
+        android: {
+            notification: {
+                channelId: "admin_notifications",
+                priority: "high",
+                sound: "default",
+                icon: "ic_launcher",
+            },
+        },
+        apns: {
+            payload: {
+                aps: {
+                    alert: {
+                        title: title,
+                        body: body,
+                    },
+                    badge: 1,
+                    sound: "default",
+                },
+            },
+        },
+    };
+
+    const response = await messaging.sendMulticast(message);
+    console.log(`✅ Broadcast sent: ${response.successCount} successful, ` +
+               `${response.failureCount} failed`);
+
+    // Clean up invalid tokens
+    const invalidTokens = [];
+    response.responses.forEach((resp, idx) => {
+        if (!resp.success && resp.error &&
+            resp.error.code === "messaging/registration-token-not-registered") {
+            invalidTokens.push(adminTokens[idx]);
+        }
+    });
+
+    if (invalidTokens.length > 0) {
+        await cleanupInvalidTokens(invalidTokens);
+    }
+
+    return response;
+}
+
+/**
+ * Helper function to clean up invalid tokens
+ * @param {Array} invalidTokens - Array of invalid FCM tokens
+ * @return {Promise} Batch commit result
+ */
+async function cleanupInvalidTokens(invalidTokens) {
+    console.log(`🗑️ Cleaning up ${invalidTokens.length} invalid tokens`);
+
+    const batch = db.batch();
+
+    for (const token of invalidTokens) {
+        // Find and delete documents with invalid tokens
+        const adminTokenQuery = await db.collection("admin_tokens")
+            .where("token", "==", token)
+            .get();
+
+        adminTokenQuery.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+
+        // Also clean up from users collection
+        const userQuery = await db.collection("users")
+            .where("fcmToken", "==", token)
+            .get();
+
+        userQuery.forEach((doc) => {
+            batch.update(doc.ref, {
+                fcmToken: admin.firestore.FieldValue.delete(),
+                tokenUpdatedAt: admin.firestore.FieldValue.delete(),
+            });
+        });
+    }
+
+    await batch.commit();
+    console.log(`✅ Cleaned up ${invalidTokens.length} invalid tokens`);
+}

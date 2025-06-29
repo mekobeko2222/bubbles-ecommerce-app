@@ -24,6 +24,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int _selectedQuantity = 1;
   final PageController _pageController = PageController();
   int _currentImageIndex = 0;
+  List<Product> _relatedProducts = [];
+  bool _isLoadingRelated = false;
 
   @override
   void initState() {
@@ -62,6 +64,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           _product = Product.fromFirestore(doc);
           _isLoading = false;
         });
+
+        // Load related products after main product is loaded
+        await _loadRelatedProducts();
       } else {
         setState(() {
           _isLoading = false;
@@ -73,6 +78,59 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  Future<void> _loadRelatedProducts() async {
+    if (_product == null) return;
+
+    setState(() {
+      _isLoadingRelated = true;
+    });
+
+    try {
+      final productData = await _firestore.collection('products').doc(widget.productId).get();
+      if (productData.exists) {
+        final data = productData.data() as Map<String, dynamic>;
+        final List<dynamic> relatedProductIds = data['relatedProductIds'] ?? [];
+
+        if (relatedProductIds.isNotEmpty) {
+          // Fetch related products in batches of 10 (Firestore limit for 'in' queries)
+          List<Product> allRelatedProducts = [];
+
+          for (int i = 0; i < relatedProductIds.length; i += 10) {
+            final batch = relatedProductIds.skip(i).take(10).toList();
+            final querySnapshot = await _firestore
+                .collection('products')
+                .where(FieldPath.documentId, whereIn: batch)
+                .get();
+
+            final batchProducts = querySnapshot.docs
+                .map((doc) => Product.fromFirestore(doc))
+                .toList();
+
+            allRelatedProducts.addAll(batchProducts);
+          }
+
+          setState(() {
+            _relatedProducts = allRelatedProducts;
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading related products: $e');
+    } finally {
+      setState(() {
+        _isLoadingRelated = false;
+      });
+    }
+  }
+
+  void _navigateToProductDetail(String productId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ProductDetailScreen(productId: productId),
+      ),
+    );
   }
 
   @override
@@ -401,6 +459,169 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                   ),
+
+                  // Related Products Section
+                  if (_relatedProducts.isNotEmpty || _isLoadingRelated) ...[
+                    const SizedBox(height: 32),
+                    Divider(color: Colors.grey[300]),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Related Products',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    if (_isLoadingRelated)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    else
+                      SizedBox(
+                        height: 280,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _relatedProducts.length,
+                          itemBuilder: (context, index) {
+                            final relatedProduct = _relatedProducts[index];
+                            final relatedDiscountedPrice = relatedProduct.price * (1 - (relatedProduct.discount / 100));
+
+                            return Container(
+                              width: 180,
+                              margin: const EdgeInsets.only(right: 12),
+                              child: Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: InkWell(
+                                  onTap: () => _navigateToProductDetail(relatedProduct.id),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Product Image
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                                        child: relatedProduct.imageUrls.isNotEmpty
+                                            ? Image.network(
+                                          relatedProduct.imageUrls[0],
+                                          height: 120,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                          loadingBuilder: (context, child, loadingProgress) {
+                                            if (loadingProgress == null) return child;
+                                            return Container(
+                                              height: 120,
+                                              color: Colors.grey[200],
+                                              child: const Center(child: CircularProgressIndicator()),
+                                            );
+                                          },
+                                          errorBuilder: (context, error, stackTrace) {
+                                            return Container(
+                                              height: 120,
+                                              color: Colors.grey[300],
+                                              child: const Center(
+                                                child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                              ),
+                                            );
+                                          },
+                                        )
+                                            : Container(
+                                          height: 120,
+                                          color: Colors.grey[300],
+                                          child: const Center(
+                                            child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Product Details
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              // Product Name
+                                              Text(
+                                                relatedProduct.name,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 4),
+
+                                              // Price
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'EGP ${relatedDiscountedPrice.toStringAsFixed(2)}',
+                                                    style: TextStyle(
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  if (relatedProduct.discount > 0) ...[
+                                                    const SizedBox(width: 4),
+                                                    Flexible(
+                                                      child: Text(
+                                                        'EGP ${relatedProduct.price.toStringAsFixed(2)}',
+                                                        style: TextStyle(
+                                                          decoration: TextDecoration.lineThrough,
+                                                          color: Colors.grey[600],
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ],
+                                              ),
+
+                                              const Spacer(),
+
+                                              // Stock Status
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    relatedProduct.quantity > 0 ? Icons.check_circle : Icons.cancel,
+                                                    color: relatedProduct.quantity > 0 ? Colors.green : Colors.red,
+                                                    size: 12,
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  Expanded(
+                                                    child: Text(
+                                                      relatedProduct.quantity > 0 ? 'In Stock' : 'Out of Stock',
+                                                      style: TextStyle(
+                                                        color: relatedProduct.quantity > 0 ? Colors.green : Colors.red,
+                                                        fontSize: 10,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                  ],
                 ],
               ),
             ),

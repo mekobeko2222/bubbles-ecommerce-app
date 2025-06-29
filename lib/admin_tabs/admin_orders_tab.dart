@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:bubbles_ecommerce_app/generated/app_localizations.dart';
 import 'package:bubbles_ecommerce_app/services/error_handler.dart'; // Import error handler
 import 'package:bubbles_ecommerce_app/config/app_config.dart'; // Import config
+import 'package:awesome_notifications/awesome_notifications.dart'; // For local notifications
 
 class AdminOrdersTab extends StatefulWidget {
   const AdminOrdersTab({super.key});
@@ -123,14 +124,79 @@ class _AdminOrdersTabState extends State<AdminOrdersTab> {
       await ErrorHandler.handleAsyncError(
         context,
             () async {
+          // Update order status in Firestore
           await _firestore.collection('orders').doc(orderId).update({
             'orderStatus': newStatus,
             'updatedAt': FieldValue.serverTimestamp(),
           });
+
+          // Send customer notification about status change
+          await _sendCustomerStatusNotification(orderId, newStatus);
         },
         successMessage: _appLocalizations.orderStatusUpdated(newStatus, orderId),
         errorPrefix: 'Failed to update order status',
       );
+    }
+  }
+
+  /// Send local notification to customer about order status change
+  Future<void> _sendCustomerStatusNotification(String orderId, String newStatus) async {
+    try {
+      debugPrint('📱 Sending customer notification for order: $orderId, status: $newStatus');
+
+      String title;
+      String body;
+      String emoji;
+
+      // Customize message based on status
+      switch (newStatus.toLowerCase()) {
+        case 'processing':
+          title = '⚙️ Order Update';
+          body = 'Your order is now being processed!';
+          emoji = '⚙️';
+          break;
+        case 'shipped':
+          title = '🚚 Order Shipped';
+          body = 'Your order has been shipped and is on its way!';
+          emoji = '🚚';
+          break;
+        case 'delivered':
+          title = '✅ Order Delivered';
+          body = 'Your order has been delivered successfully!';
+          emoji = '✅';
+          break;
+        case 'cancelled':
+          title = '❌ Order Cancelled';
+          body = 'Your order has been cancelled.';
+          emoji = '❌';
+          break;
+        default:
+          title = '📦 Order Update';
+          body = 'Your order status has been updated to $newStatus';
+          emoji = '📦';
+      }
+
+      // Create notification using AwesomeNotifications
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          channelKey: 'order_notifications',
+          title: title,
+          body: '$body\nOrder #${orderId.substring(0, 8).toUpperCase()}',
+          wakeUpScreen: true,
+          category: NotificationCategory.Status,
+          payload: {
+            'type': 'order_update',
+            'orderId': orderId,
+            'newStatus': newStatus,
+          },
+        ),
+      );
+
+      debugPrint('✅ Customer notification sent for order status change');
+    } catch (e) {
+      debugPrint('❌ Error sending customer notification: $e');
+      // Don't fail the status update if notification fails
     }
   }
 
@@ -636,21 +702,106 @@ class _AdminOrdersTabState extends State<AdminOrdersTab> {
                                         itemCount: orderItems.length,
                                         itemBuilder: (context, itemIndex) {
                                           final item = orderItems[itemIndex];
+                                          final List<dynamic>? imageUrls = item['imageUrls'] as List<dynamic>?;
+                                          final String? firstImageUrl = (imageUrls != null && imageUrls.isNotEmpty)
+                                              ? imageUrls[0] as String?
+                                              : null;
+
                                           return Padding(
-                                            padding: const EdgeInsets.only(bottom: 4.0),
+                                            padding: const EdgeInsets.only(bottom: 8.0),
                                             child: Row(
                                               children: [
-                                                const Icon(Icons.circle, size: 6, color: Colors.grey),
-                                                const SizedBox(width: 8),
-                                                Expanded(
-                                                  child: Text(
-                                                    '${item['name']} x${item['quantity']}',
-                                                    style: const TextStyle(fontWeight: FontWeight.w500),
+                                                // Product Image
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    border: Border.all(color: Colors.grey[300]!),
+                                                  ),
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    child: firstImageUrl != null
+                                                        ? Image.network(
+                                                      firstImageUrl,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context, error, stackTrace) {
+                                                        return Container(
+                                                          color: Colors.grey[200],
+                                                          child: Icon(
+                                                            Icons.image_not_supported,
+                                                            color: Colors.grey[400],
+                                                            size: 20,
+                                                          ),
+                                                        );
+                                                      },
+                                                      loadingBuilder: (context, child, loadingProgress) {
+                                                        if (loadingProgress == null) return child;
+                                                        return Container(
+                                                          color: Colors.grey[100],
+                                                          child: Center(
+                                                            child: SizedBox(
+                                                              width: 20,
+                                                              height: 20,
+                                                              child: CircularProgressIndicator(
+                                                                strokeWidth: 2,
+                                                                value: loadingProgress.expectedTotalBytes != null
+                                                                    ? loadingProgress.cumulativeBytesLoaded /
+                                                                    loadingProgress.expectedTotalBytes!
+                                                                    : null,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    )
+                                                        : Container(
+                                                      color: Colors.grey[200],
+                                                      child: Icon(
+                                                        Icons.image,
+                                                        color: Colors.grey[400],
+                                                        size: 20,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                                Text(
-                                                  '${AppConfig.currency} ${(item['price'] as num?)?.toStringAsFixed(2) ?? '0.00'} each',
-                                                  style: TextStyle(color: Colors.grey[600]),
+                                                const SizedBox(width: 12),
+                                                // Product Details
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        item['name'] ?? 'Unknown Product',
+                                                        style: const TextStyle(
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 14,
+                                                        ),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                      const SizedBox(height: 4),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            'Qty: ${item['quantity'] ?? 1}',
+                                                            style: TextStyle(
+                                                              color: Colors.grey[600],
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(width: 8),
+                                                          Text(
+                                                            '${AppConfig.currency} ${(item['price'] as num?)?.toStringAsFixed(2) ?? '0.00'} each',
+                                                            style: TextStyle(
+                                                              color: Colors.grey[600],
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
